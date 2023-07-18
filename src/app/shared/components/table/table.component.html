@@ -3,22 +3,22 @@
     <table mat-table [dataSource]="dataSource" matSort>
 
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header appHighlight> ID </th>
         <td mat-cell *matCellDef="let row"> {{row.id}} </td>
       </ng-container>
 
       <ng-container matColumnDef="fullname">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> <span appHighlight>Nombre Completo</span> </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header appHighlight>Nombre Completo</th>
         <td mat-cell *matCellDef="let row"> {{ row | nombreCompleto }} </td>
       </ng-container>
 
       <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header appHighlight> Email </th>
         <td mat-cell *matCellDef="let row"> {{row.email}} </td>
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header appHighlight> Action </th>
         <td mat-cell *matCellDef="let row">
           <button mat-icon-button color="primary" (click)="editStudent.emit(row)">
             <mat-icon>edit</mat-icon>
