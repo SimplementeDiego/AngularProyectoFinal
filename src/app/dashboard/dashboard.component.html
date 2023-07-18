@@ -1,0 +1,2 @@
+<app-navbar (agregarEstudiante)="createStudent()"></app-navbar>
+<app-table [dataSource] = "estudiantes" class="largo" (deleteStudent)="deleteStudent($event)" (editStudent)="editStudent($event)" ></app-table>
