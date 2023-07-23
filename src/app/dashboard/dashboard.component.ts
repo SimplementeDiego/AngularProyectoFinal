@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { AlumnosService } from '../services/alumnos.service';
 import { MatDialog } from '@angular/material/dialog';
 import { StudAddEditComponent } from '../shared/components/stud-add-edit/stud-add-edit.component';
+import { Observable, tap, map } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,33 +10,22 @@ import { StudAddEditComponent } from '../shared/components/stud-add-edit/stud-ad
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent {
-  estudiantes = [
-    {
-      id: '1',
-      firstName: 'Diego',
-      lastName: 'Furrer',
-      email: 'diego@gmail.com',
-    },
-    {
-      id: '2',
-      firstName: 'Pedro',
-      lastName: 'Varela',
-      email: 'pedro@gmail.com',
-    },
-    {
-      id: '3',
-      firstName: 'German',
-      lastName: 'Juan',
-      email: 'German@gmail.com',
-    },
-  ];
+  estudiantes: Observable<Array<any>>;
 
-  private id: number = 3;
+  constructor(
+    private alumnosService: AlumnosService,
+    private matDialog: MatDialog
+  ) {
+    this.estudiantes = this.alumnosService.getStudents();
+  }
 
-  constructor(private matDialog: MatDialog) {}
+  getStudents() {
+    this.estudiantes = this.alumnosService.getStudents();
+  }
 
   deleteStudent(student: any) {
-    this.estudiantes = this.estudiantes.filter((u) => u.id !== student.id);
+    this.alumnosService.deleteStudent(student);
+    this.getStudents();
   }
 
   createStudent(): void {
@@ -44,15 +35,8 @@ export class DashboardComponent {
       .subscribe({
         next: (v) => {
           if (v) {
-            this.estudiantes = [
-              ...this.estudiantes,
-              {
-                id: (++this.id).toString(),
-                firstName: v.firstName,
-                lastName: v.lastName,
-                email: v.email,
-              },
-            ];
+            this.alumnosService.createStudent(v);
+            this.getStudents();
           } else {
           }
         },
@@ -66,15 +50,23 @@ export class DashboardComponent {
       .subscribe({
         next: (studentUpdated) => {
           if (studentUpdated) {
-            this.estudiantes = this.estudiantes.map((estudiante) => {
-              return estudiante.id === student.id
-                ? { ...estudiante, ...studentUpdated }
-                : estudiante;
-            });
+            this.alumnosService.editStudent(student, studentUpdated);
+            this.getStudents();
           }
         },
       });
   }
 
-
+  applyFilter(event: Event) {
+    //this.alumnosService.applyFilter(event);
+    const filterValue = (event.target as HTMLInputElement).value;
+    console.log(filterValue)
+    this.estudiantes = this.alumnosService.getStudents().pipe(
+      map((valor) => {
+        return valor.filter( (estudiante: any) => {
+          return estudiante.firstName.startsWith(filterValue);
+        } );
+      })
+    );
+  }
 }

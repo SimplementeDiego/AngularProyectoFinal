@@ -19,12 +19,7 @@ export class TableComponent {
   @Output()
   editStudent = new EventEmitter<any>();
 
-  // openAddEditEmpForm() {
-  //   const dialogRef = this._dialog.open(StudAddEditComponent);
-  //   dialogRef.afterClosed().subscribe({
-  //     next: (val) => {
-  //       console.log(val);
-  //     },
-  //   });
-  // }
+  @Output()
+  applyFilter = new EventEmitter<any>();
+
 }

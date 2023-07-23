@@ -1,4 +1,8 @@
 <div class="main-body">
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter.emit($event)" placeholder="Ex. Mia" #input>
+  </mat-form-field>
   <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
 
