@@ -1,0 +1,2 @@
+<app-navbar (agregar)="createClase()" [titulo]="titulo" ></app-navbar>
+<app-table [dataSource] = "(clases | async) || []" class="largo" (deleteButton)="deleteClase($event)" (editButton)="editClase($event)" (applyFilter)="applyFilter($event)" [displayedColumns] = "displayedColumns" ></app-table>

@@ -1,0 +1,17 @@
+<mat-drawer-container class="entero">
+  <mat-drawer mode="side" opened class="drawer container gray">
+    <div>
+      <h1>SideNav</h1>
+    </div>
+    <div>
+      <a routerLink="alumnos"><button mat-raised-button color="primary">Alumnos</button></a>
+    </div>
+    <div>
+      <a routerLink="clases"><button mat-raised-button color="primary">Clases</button></a>
+    </div>
+    <div>
+      <a routerLink="cursos"><button mat-raised-button color="primary">Cursos</button></a>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content><ng-content></ng-content></mat-drawer-content>
+</mat-drawer-container>

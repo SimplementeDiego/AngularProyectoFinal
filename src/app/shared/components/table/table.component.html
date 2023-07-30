@@ -21,13 +21,43 @@
         <td mat-cell *matCellDef="let row"> {{row.email}} </td>
       </ng-container>
 
+      <ng-container matColumnDef="nombreClase">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header appHighlight> Clase </th>
+        <td mat-cell *matCellDef="let row"> {{row.nombreClase}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="cantidadAlumnos">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header appHighlight> Alumnos </th>
+        <td mat-cell *matCellDef="let row"> {{row.cantidadAlumnos}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="profesor">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header appHighlight> Profesor </th>
+        <td mat-cell *matCellDef="let row"> {{row.profesor}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="areaCurso">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header appHighlight> Area del Curso </th>
+        <td mat-cell *matCellDef="let row"> {{row.areaCurso}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="duracion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header appHighlight> Duración </th>
+        <td mat-cell *matCellDef="let row"> {{row.duracion}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="certificado">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header appHighlight> Certificado </th>
+        <td mat-cell *matCellDef="let row"> {{row.certificado}} </td>
+      </ng-container>
+
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef mat-sort-header appHighlight> Action </th>
         <td mat-cell *matCellDef="let row">
-          <button mat-icon-button color="primary" (click)="editStudent.emit(row)">
+          <button mat-icon-button color="primary" (click)="editButton.emit(row)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteStudent.emit(row)">
+          <button mat-icon-button color="warn" (click)="deleteButton.emit(row)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>

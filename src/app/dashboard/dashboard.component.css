@@ -1,15 +1,5 @@
-.largo{
-  display: block;
-  max-width: 1000px;
-  margin: auto;
-}
 
-h3{
-  text-align: center;
-  margin-top: 40px;
-  border: 1px solid black;
+.entero{
   display: block;
-  width: fit-content;
-  margin: 40px auto;
-  padding: 5px;
+  height: 100vh;
 }

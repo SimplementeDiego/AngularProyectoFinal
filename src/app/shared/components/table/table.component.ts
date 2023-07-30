@@ -8,16 +8,17 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 export class TableComponent {
 
-  displayedColumns: string[] = ['id', 'fullname', 'email', 'action'];
+  @Input()
+  displayedColumns: string[] = [];
 
   @Input()
   dataSource: Array<any> = [];
 
   @Output()
-  deleteStudent = new EventEmitter<any>();
+  deleteButton = new EventEmitter<any>();
 
   @Output()
-  editStudent = new EventEmitter<any>();
+  editButton = new EventEmitter<any>();
 
   @Output()
   applyFilter = new EventEmitter<any>();

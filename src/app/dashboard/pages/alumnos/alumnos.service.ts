@@ -6,6 +6,9 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root',
 })
 export class AlumnosService {
+
+  displayedColumns: string[] = ['id', 'fullname', 'email', 'action'];
+
   estudiantes = [
     {
       id: '1',

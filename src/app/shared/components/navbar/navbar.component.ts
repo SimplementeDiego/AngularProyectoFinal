@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -11,6 +11,9 @@ export class NavbarComponent {
   editUser = new EventEmitter<any>();
 
   @Output()
-  agregarEstudiante = new EventEmitter<any>();
+  agregar = new EventEmitter<any>();
+
+  @Input()
+  titulo: string = '';
 
 }

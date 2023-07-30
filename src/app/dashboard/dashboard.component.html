@@ -1,3 +1,5 @@
-<app-navbar (agregarEstudiante)="createStudent()"></app-navbar>
-<app-table [dataSource] = "(estudiantes | async) || []" class="largo" (deleteStudent)="deleteStudent($event)" (editStudent)="editStudent($event)" (applyFilter)="applyFilter($event) " ></app-table>
-<h3>Servicio de Alumnos con Observable, mostrado utilizando pipe ASYNC, permitiendo filtrar por nombre con RXJS</h3>
+<app-side-nav class="entero">
+  <router-outlet></router-outlet>
+</app-side-nav>
+
+

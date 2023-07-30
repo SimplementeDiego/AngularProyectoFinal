@@ -1,0 +1,31 @@
+<div mat-dialog-title>
+  <h1>Clases Form</h1>
+</div>
+
+<form [formGroup]="cursoForm" (ngSubmit)="onFormSubmit()">
+
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Area del Curso</mat-label>
+        <input matInput placeholder="Programación Backend" type="text" formControlName="areaCurso">
+
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Duracion</mat-label>
+        <input matInput placeholder="15 meses" type="text" formControlName="duracion">
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Certificado</mat-label>
+        <input matInput placeholder="Si" type="text" formControlName="certificado">
+      </mat-form-field>
+    </div>
+  </div>
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="cursoForm.invalid">{{data ? 'Update' : 'Save'}}</button>
+  </div>
+
+</form>
