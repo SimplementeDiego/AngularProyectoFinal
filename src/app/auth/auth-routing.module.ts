@@ -13,6 +13,10 @@ import { RegisterComponent } from "./pages/register/register.component";
       {
         path: 'register',
         component: RegisterComponent
+      },
+      {
+        path: "**",
+        redirectTo: "login"
       }
     ])
   ]
