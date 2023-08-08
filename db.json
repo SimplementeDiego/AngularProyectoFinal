@@ -57,6 +57,12 @@
       "duracion": "18 meses",
       "certificado": "Si",
       "id": 3
+    },
+    {
+      "areaCurso": "Backend",
+      "duracion": "12 meses",
+      "certificado": "Si",
+      "id": 4
     }
   ],
   "usuarios": [
