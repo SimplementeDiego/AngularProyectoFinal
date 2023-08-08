@@ -5,10 +5,7 @@ import { AuthComponent } from './auth/auth.component';
 import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
-  {
-    path: '**',
-    redirectTo: '/auth/login',
-  },
+
   {
     path: 'dashboard',
     component: DashboardComponent,
@@ -19,6 +16,10 @@ const routes: Routes = [
     path: 'auth',
     component: AuthComponent,
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)
+  },
+  {
+    path: '/**',
+    redirectTo: '/auth/login',
   }
 ];
 
