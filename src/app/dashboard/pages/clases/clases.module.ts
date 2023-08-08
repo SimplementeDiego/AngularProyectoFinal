@@ -6,11 +6,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ClassAddEditComponent } from './class-add-edit/class-add-edit.component';
 import { ClasesComponent } from './clases.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-
-
+import { ClasesRoutingModule } from './clases-routing.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +22,8 @@ import { MatButtonModule } from '@angular/material/button';
     ReactiveFormsModule,
     SharedModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    ClasesRoutingModule
   ],
   exports: [
     ClassAddEditComponent,

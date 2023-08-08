@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { AlumnosRoutingModule } from './alumnos-routing.module';
 
 
 
@@ -23,7 +24,8 @@ import { MatButtonModule } from '@angular/material/button';
     ReactiveFormsModule,
     SharedModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    AlumnosRoutingModule
   ],
   exports: [
     StudAddEditComponent,

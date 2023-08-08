@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, map } from 'rxjs';
-import { CursosService } from './cursos.service';
+import { CursosService } from '../../../core/services/cursos.service';
 import { CursosAddEditComponent } from './cursos-add-edit/cursos-add-edit.component';
 
 @Component({
@@ -19,19 +19,26 @@ export class CursosComponent {
     private cursosService: CursosService,
     private matDialog: MatDialog
   ) {
-    this.cursos = this.cursosService.getCursos();
+    this.cursos = this.cursosService.getCursoList();
     this.displayedColumns = this.cursosService.displayedColumns;
   }
 
 
 
   getCursos() {
-    this.cursos = this.cursosService.getCursos();
+    this.cursos = this.cursosService.getCursoList();
   }
 
-  deleteCurso(curso: any) {
-    this.cursosService.deleteCurso(curso);
-    this.getCursos();
+  deleteCurso(id: number) {
+    this.cursosService.deleteCurso(id).subscribe({
+      next: (res) => {
+        alert('Curso eliminado.');
+        this.getCursos();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   createCurso(): void {
@@ -41,7 +48,6 @@ export class CursosComponent {
       .subscribe({
         next: (v) => {
           if (v) {
-            this.cursosService.createCurso(v);
             this.getCursos();
           } else {
           }
@@ -56,7 +62,6 @@ export class CursosComponent {
       .subscribe({
         next: (cursoUpdated) => {
           if (cursoUpdated) {
-            this.cursosService.editCurso(curso, cursoUpdated);
             this.getCursos();
           }
         },
@@ -66,10 +71,10 @@ export class CursosComponent {
   applyFilter(event: Event) {
     //this.alumnosService.applyFilter(event);
     const filterValue = (event.target as HTMLInputElement).value;
-    this.cursos = this.cursosService.getCursos().pipe(
+    this.cursos = this.cursosService.getCursoList().pipe(
       map((valor) => {
-        return valor.filter( (clase: any) => {
-          return clase.areaCurso.toLowerCase().startsWith(filterValue.toLowerCase());
+        return valor.filter( (curso: any) => {
+          return curso.areaCurso.toLowerCase().startsWith(filterValue.toLowerCase());
         } );
       })
     );

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { StudAddEditComponent } from 'src/app/dashboard/pages/alumnos/stud-add-edit/stud-add-edit.component';
 import { Observable, tap, map } from 'rxjs';
-import { AlumnosService } from 'src/app/dashboard/pages/alumnos/alumnos.service';
+import { AlumnosService } from 'src/app/core/services/alumnos.service';
 
 @Component({
   selector: 'app-alumnos',
@@ -15,58 +15,63 @@ export class AlumnosComponent {
   displayedColumns: string[];
   titulo: string = "Alumnos ABM";
 
+
+
   constructor(
     private alumnosService: AlumnosService,
     private matDialog: MatDialog
   ) {
-    this.estudiantes = this.alumnosService.getStudents();
+    this.estudiantes = this.alumnosService.getAlumnoList();
     this.displayedColumns = this.alumnosService.displayedColumns;
   }
 
-
-
-  getStudents() {
-    this.estudiantes = this.alumnosService.getStudents();
+  getAlumnosList() {
+    this.estudiantes = this.alumnosService.getAlumnoList()
   }
 
-  deleteStudent(student: any) {
-    this.alumnosService.deleteStudent(student);
-    this.getStudents();
+  deleteAlumno(id: number) {
+    this.alumnosService.deleteAlumno(id).subscribe({
+      next: (res) => {
+        alert('Student deleted!');
+        this.getAlumnosList();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
-  createStudent(): void {
+  addAlumno(): void {
     this.matDialog
       .open(StudAddEditComponent)
       .afterClosed()
       .subscribe({
         next: (v) => {
           if (v) {
-            this.alumnosService.createStudent(v);
-            this.getStudents();
+            this.getAlumnosList();
           } else {
           }
         },
       });
   }
 
-  editStudent(student: any): void {
+  updateAlumno(student: any): void {
     this.matDialog
       .open(StudAddEditComponent, { data: student })
       .afterClosed()
       .subscribe({
         next: (studentUpdated) => {
           if (studentUpdated) {
-            this.alumnosService.editStudent(student, studentUpdated);
-            this.getStudents();
+            this.getAlumnosList();
           }
         },
       });
   }
 
   applyFilter(event: Event) {
-    //this.alumnosService.applyFilter(event);
     const filterValue = (event.target as HTMLInputElement).value;
-    this.estudiantes = this.alumnosService.getStudents().pipe(
+
+    this.estudiantes = this.alumnosService.getAlumnoList().pipe(
       map((valor) => {
         return valor.filter( (estudiante: any) => {
           return estudiante.firstName.toLowerCase().startsWith(filterValue.toLowerCase());

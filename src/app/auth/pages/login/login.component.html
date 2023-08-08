@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="inner-container">
+    <h1><strong>Iniciar sesion</strong></h1>
+    <div>
+      <div>
+        <mat-form-field class="all">
+          <mat-label>Email</mat-label>
+          <input [formControl]="emailControl" matInput />
+          <mat-error>CAMPO INVALIDO</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="all">
+          <mat-label>Contrasena</mat-label>
+          <input [formControl]="passwordControl" type="password" matInput />
+          <mat-error>CAMPO INVALIDO</mat-error>
+        </mat-form-field>
+      </div>
+      <div>
+        <button (click)="login()" mat-flat-button color="primary">Ingresar</button>
+      </div>
+      <div class="mtop">
+        <a routerLink="../register"><button mat-flat-button color="primary">Registrarse</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

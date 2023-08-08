@@ -6,6 +6,7 @@ import { AlumnosModule } from './pages/alumnos/alumnos.module';
 import { ClasesModule } from './pages/clases/clases.module';
 import { RouterOutlet } from '@angular/router';
 import { CursosModule } from './pages/cursos/cursos.module';
+import { DashboardRoutingModule } from './dashboard-routing.module';
 
 @NgModule({
   declarations: [
@@ -14,10 +15,8 @@ import { CursosModule } from './pages/cursos/cursos.module';
   imports: [
     CommonModule,
     SharedModule,
-    AlumnosModule,
-    ClasesModule,
     RouterOutlet,
-    CursosModule
+    DashboardRoutingModule
   ],
   exports: [
     DashboardComponent,

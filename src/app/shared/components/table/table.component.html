@@ -1,7 +1,7 @@
 <div class="main-body">
   <mat-form-field>
     <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter.emit($event)" placeholder="Ex. Mia" #input>
+    <input matInput (keyup)="applyFilter.emit($event)" placeholder="" #input>
   </mat-form-field>
   <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort>
@@ -57,7 +57,7 @@
           <button mat-icon-button color="primary" (click)="editButton.emit(row)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="warn" (click)="deleteButton.emit(row)">
+          <button mat-icon-button color="warn" (click)="deleteButton.emit(row.id)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>

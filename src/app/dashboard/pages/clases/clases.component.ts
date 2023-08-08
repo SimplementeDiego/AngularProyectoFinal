@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { Observable, tap, map } from 'rxjs';
-import { ClasesService } from 'src/app/dashboard/pages/clases/clases.service';
+import { ClasesService } from 'src/app/core/services/clases.service';
 import { ClassAddEditComponent } from 'src/app/dashboard/pages/clases/class-add-edit/class-add-edit.component';
 
 @Component({
@@ -19,19 +19,26 @@ export class ClasesComponent {
     private clasesService: ClasesService,
     private matDialog: MatDialog
   ) {
-    this.clases = this.clasesService.getClases();
+    this.clases = this.clasesService.getClaseList();
     this.displayedColumns = this.clasesService.displayedColumns;
   }
 
 
 
   getClases() {
-    this.clases = this.clasesService.getClases();
+    this.clases = this.clasesService.getClaseList();
   }
 
-  deleteClase(clase: any) {
-    this.clasesService.deleteClase(clase);
-    this.getClases();
+  deleteClase(id: number) {
+    this.clasesService.deleteClase(id).subscribe({
+      next: (res) => {
+        alert('Clase borrada.');
+        this.getClases();
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   createClase(): void {
@@ -41,7 +48,6 @@ export class ClasesComponent {
       .subscribe({
         next: (v) => {
           if (v) {
-            this.clasesService.createClase(v);
             this.getClases();
           } else {
           }
@@ -56,7 +62,7 @@ export class ClasesComponent {
       .subscribe({
         next: (claseUpdated) => {
           if (claseUpdated) {
-            this.clasesService.editClase(clase, claseUpdated);
+            this.clasesService.updateClase(clase, claseUpdated);
             this.getClases();
           }
         },
@@ -64,9 +70,8 @@ export class ClasesComponent {
   }
 
   applyFilter(event: Event) {
-    //this.alumnosService.applyFilter(event);
     const filterValue = (event.target as HTMLInputElement).value;
-    this.clases = this.clasesService.getClases().pipe(
+    this.clases = this.clasesService.getClaseList().pipe(
       map((valor) => {
         return valor.filter( (clase: any) => {
           return clase.nombreClase.toLowerCase().startsWith(filterValue.toLowerCase());

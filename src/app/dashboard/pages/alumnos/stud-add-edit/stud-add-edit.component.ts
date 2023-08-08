@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AlumnosService } from 'src/app/core/services/alumnos.service';
 
 @Component({
   selector: 'app-stud-add-edit',
@@ -21,6 +22,7 @@ export class StudAddEditComponent implements OnInit {
 
   constructor(
     private _dialogRef: MatDialogRef<StudAddEditComponent>,
+    private _alumnosService: AlumnosService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
   }
@@ -31,9 +33,29 @@ export class StudAddEditComponent implements OnInit {
 
   onFormSubmit() {
     if (this.studForm.valid) {
-      this._dialogRef.close(this.studForm.value);
-    }else{
-      this._dialogRef.close();
+      if (this.data) {
+        this._alumnosService
+          .updateAlumno(this.data.id, this.studForm.value)
+          .subscribe({
+            next: (val: any) => {
+              alert('Student updated!');
+              this._dialogRef.close(true);
+            },
+            error: (err: any) => {
+              console.error(err);
+            },
+          });
+      } else {
+        this._alumnosService.addAlumno(this.studForm.value).subscribe({
+          next: (val: any) => {
+            alert('Student added succesfully');
+            this._dialogRef.close(true);
+          },
+          error: (err: any) => {
+            console.error(err);
+          },
+        });
+      }
     }
   }
 

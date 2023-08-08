@@ -1,0 +1,94 @@
+{
+  "alumnos": [
+    {
+      "firstName": "Diegote",
+      "lastName": "Furrer",
+      "email": "Diego@gmail.com",
+      "id": 1
+    },
+    {
+      "firstName": "Jose",
+      "lastName": "Pedro",
+      "email": "jose.pedro@gmail.com",
+      "id": 2
+    },
+    {
+      "firstName": "Juan",
+      "lastName": "Pablo",
+      "email": "JuanPablo@gmail.com",
+      "id": 3
+    }
+  ],
+  "clases": [
+    {
+      "nombreClase": "Calculo",
+      "cantidadAlumnos": "3947",
+      "profesor": "Matilde Gomez",
+      "id": 1
+    },
+    {
+      "nombreClase": "Calculo 2",
+      "cantidadAlumnos": "1235",
+      "profesor": "Alexandre Miquel",
+      "id": 2
+    },
+    {
+      "nombreClase": "Geometría y Álgebra Lineal",
+      "cantidadAlumnos": "789",
+      "profesor": "Manuel Perez",
+      "id": 3
+    }
+  ],
+  "Cursos": [
+    {
+      "areaCurso": "JavaScript",
+      "duracion": "12 meses",
+      "certificado": "Si",
+      "id": 1
+    },
+    {
+      "areaCurso": "C++",
+      "duracion": "24 meses",
+      "certificado": "No",
+      "id": 2
+    },
+    {
+      "areaCurso": "Python",
+      "duracion": "18 meses",
+      "certificado": "Si",
+      "id": 3
+    }
+  ],
+  "usuarios": [
+    {
+      "usuario": "d",
+      "email": "d@d",
+      "password": "123",
+      "id": 1
+    },
+    {
+      "usuario": "diego",
+      "email": "diego@gmail.com",
+      "password": "123",
+      "id": 2
+    },
+    {
+      "usuario": "diego2",
+      "email": "diego2@gmail.com",
+      "password": "123",
+      "id": 3
+    },
+    {
+      "usuario": "diego3",
+      "email": "diego3@gmail.com",
+      "password": "123",
+      "id": 4
+    },
+    {
+      "usuario": "usuario",
+      "email": "usuarioApellido@gmail.com",
+      "password": "123456",
+      "id": 5
+    }
+  ]
+}

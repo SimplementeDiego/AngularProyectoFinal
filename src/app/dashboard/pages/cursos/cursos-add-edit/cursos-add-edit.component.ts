@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CursosService } from 'src/app/core/services/cursos.service';
 
 @Component({
   selector: 'app-cursos-add-edit',
@@ -20,6 +21,7 @@ export class CursosAddEditComponent implements OnInit {
 
   constructor(
     private _dialogRef: MatDialogRef<CursosAddEditComponent>,
+    private cursosService: CursosService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
   }
@@ -30,9 +32,29 @@ export class CursosAddEditComponent implements OnInit {
 
   onFormSubmit() {
     if (this.cursoForm.valid) {
-      this._dialogRef.close(this.cursoForm.value);
-    }else{
-      this._dialogRef.close();
+      if (this.data) {
+        this.cursosService
+          .updateCurso(this.data.id, this.cursoForm.value)
+          .subscribe({
+            next: (val: any) => {
+              alert('Curso modificado.');
+              this._dialogRef.close(true);
+            },
+            error: (err: any) => {
+              console.error(err);
+            },
+          });
+      } else {
+        this.cursosService.addCurso(this.cursoForm.value).subscribe({
+          next: (val: any) => {
+            alert('Curso agregado correctamente.');
+            this._dialogRef.close(true);
+          },
+          error: (err: any) => {
+            console.error(err);
+          },
+        });
+      }
     }
   }
 }

@@ -5,8 +5,6 @@ import { HighlightDirective } from './directives/highlight.directive';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { TableComponent } from './components/table/table.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
@@ -27,7 +25,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
     HighlightDirective,
     NavbarComponent,
     SideNavComponent,
-    TableComponent
+    TableComponent,
   ],
   imports: [
     CommonModule,
@@ -42,14 +40,26 @@ import { RouterModule, RouterOutlet } from '@angular/router';
     MatInputModule,
     MatSidenavModule,
     RouterOutlet,
-    RouterModule
+    RouterModule,
   ],
   exports: [
     NombreCompletoPipe,
     HighlightDirective,
     NavbarComponent,
     SideNavComponent,
-    TableComponent
+    TableComponent,
+    MatToolbarModule,
+    MatButtonModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatPaginatorModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatSidenavModule,
+    RouterOutlet,
+    RouterModule,
   ]
 })
 export class SharedModule { }

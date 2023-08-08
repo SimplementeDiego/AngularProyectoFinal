@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ClasesService } from 'src/app/core/services/clases.service';
 
 @Component({
   selector: 'app-class-add-edit',
@@ -20,6 +21,7 @@ export class ClassAddEditComponent implements OnInit {
 
   constructor(
     private _dialogRef: MatDialogRef<ClassAddEditComponent>,
+    private _clasesService: ClasesService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
   }
@@ -30,9 +32,29 @@ export class ClassAddEditComponent implements OnInit {
 
   onFormSubmit() {
     if (this.claseForm.valid) {
-      this._dialogRef.close(this.claseForm.value);
-    }else{
-      this._dialogRef.close();
+      if (this.data) {
+        this._clasesService
+          .updateClase(this.data.id, this.claseForm.value)
+          .subscribe({
+            next: (val: any) => {
+              alert('Clase modificada.');
+              this._dialogRef.close(true);
+            },
+            error: (err: any) => {
+              console.error(err);
+            },
+          });
+      } else {
+        this._clasesService.addClase(this.claseForm.value).subscribe({
+          next: (val: any) => {
+            alert('Clase agregada correctamente.');
+            this._dialogRef.close(true);
+          },
+          error: (err: any) => {
+            console.error(err);
+          },
+        });
+      }
     }
   }
 }
