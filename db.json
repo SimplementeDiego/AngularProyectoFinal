@@ -17,6 +17,12 @@
       "lastName": "Pablo",
       "email": "JuanPablo@gmail.com",
       "id": 3
+    },
+    {
+      "firstName": "Juan",
+      "lastName": "Pepe",
+      "email": "PEPE@gmail.com",
+      "id": 4
     }
   ],
   "clases": [
