@@ -1,31 +1,33 @@
 <div mat-dialog-title>
-  <h1>Clases Form</h1>
+  <h1>Clase</h1>
 </div>
 
-<form [formGroup]="claseForm" (ngSubmit)="onFormSubmit()">
+<form [formGroup]="inscripcionForm" (ngSubmit)="onFormSubmit()">
 
   <div mat-dialog-content class="content">
     <div class="row">
       <mat-form-field appearance="outline">
-        <mat-label>Nombre de la Clase</mat-label>
-        <input matInput placeholder="Calculo" type="text" formControlName="nombreClase">
+        <mat-label>Alumno</mat-label>
+        <mat-select formControlName="alumno">
+          <mat-option [value]="alumno.id"  *ngFor="let alumno of  alumnosOptions$ | async">
+            {{ alumno | nombreCompleto }}
+          </mat-option>
 
+        </mat-select>
       </mat-form-field>
       <mat-form-field appearance="outline">
-        <mat-label>Cantidad Alumnos</mat-label>
-        <input matInput placeholder="356" type="numeric" formControlName="cantidadAlumnos">
-      </mat-form-field>
-    </div>
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Profesor</mat-label>
-        <input matInput placeholder="Diego Furrer" type="text" formControlName="profesor">
+        <mat-label>Curso</mat-label>
+        <mat-select formControlName="curso">
+          <mat-option [value]="curso.id"  *ngFor="let curso of  cursosOptions$ | async">
+            {{ curso.areaCurso }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
   </div>
   <div mat-dialog-actions class="action">
     <button mat-raised-button type="button" [mat-dialog-close]="false">Cancel</button>
-    <button mat-raised-button color="primary" type="submit" [disabled]="claseForm.invalid">{{data ? 'Update' : 'Save'}}</button>
+    <button mat-raised-button color="primary" type="submit" [disabled]="inscripcionForm.invalid">{{data ? 'Update' : 'Save'}}</button>
   </div>
 
 </form>

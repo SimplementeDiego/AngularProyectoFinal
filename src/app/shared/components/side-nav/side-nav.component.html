@@ -7,10 +7,16 @@
       <a routerLink="alumnos"><button mat-raised-button color="primary">Alumnos</button></a>
     </div>
     <div>
-      <a routerLink="clases"><button mat-raised-button color="primary">Clases</button></a>
+      <a routerLink="cursos"><button mat-raised-button color="primary">Cursos</button></a>
     </div>
     <div>
-      <a routerLink="cursos"><button mat-raised-button color="primary">Cursos</button></a>
+      <a routerLink="clases"><button mat-raised-button color="primary">Inscripciones</button></a>
+    </div>
+    <div *ngIf="rol=='Administrador'">
+      <a routerLink="usuarios"><button mat-raised-button color="primary">Usuarios</button></a>
+    </div>
+    <div>
+      <a (click)="logout()"><button mat-raised-button color="accent">Cerrar Sesión</button></a>
     </div>
   </mat-drawer>
   <mat-drawer-content><ng-content></ng-content></mat-drawer-content>

@@ -34,3 +34,7 @@ h1{
   display: block;
   height: 100vh;
 }
+
+a, button{
+  width: 90%;
+}

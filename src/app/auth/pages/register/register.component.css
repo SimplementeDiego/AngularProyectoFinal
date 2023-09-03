@@ -21,3 +21,9 @@
 .mtop{
   margin-top: 20px;
 }
+.botones{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}

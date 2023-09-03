@@ -12,10 +12,17 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { PopupComponent } from './components/popup/popup.component';
+import { PopupVerifyComponent } from './components/popup-verify/popup-verify.component';
+import { PrimerLetraMayusc } from './pipes/primerLetraMayusc.pipe';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 
 
@@ -26,6 +33,9 @@ import { RouterModule, RouterOutlet } from '@angular/router';
     NavbarComponent,
     SideNavComponent,
     TableComponent,
+    PopupComponent,
+    PopupVerifyComponent,
+    PrimerLetraMayusc
   ],
   imports: [
     CommonModule,
@@ -39,8 +49,12 @@ import { RouterModule, RouterOutlet } from '@angular/router';
     ReactiveFormsModule,
     MatInputModule,
     MatSidenavModule,
-    RouterOutlet,
     RouterModule,
+    FormsModule,
+    MatSnackBarModule,
+    MatCheckboxModule,
+    MatOptionModule,
+    MatSelectModule
   ],
   exports: [
     NombreCompletoPipe,
@@ -58,8 +72,12 @@ import { RouterModule, RouterOutlet } from '@angular/router';
     ReactiveFormsModule,
     MatInputModule,
     MatSidenavModule,
-    RouterOutlet,
     RouterModule,
+    FormsModule,
+    MatSnackBarModule,
+    MatCheckboxModule,
+    MatOptionModule,
+    MatSelectModule
   ]
 })
 export class SharedModule { }

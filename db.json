@@ -1,12 +1,6 @@
 {
   "alumnos": [
     {
-      "firstName": "Diegote",
-      "lastName": "Furrer",
-      "email": "Diego@gmail.com",
-      "id": 1
-    },
-    {
       "firstName": "Jose",
       "lastName": "Pedro",
       "email": "jose.pedro@gmail.com",
@@ -19,29 +13,21 @@
       "id": 3
     },
     {
-      "firstName": "Juan",
-      "lastName": "Pepe",
-      "email": "PEPE@gmail.com",
+      "firstName": "Diego",
+      "lastName": "Furrer",
+      "email": "diego@gmail.com",
       "id": 4
     }
   ],
   "clases": [
     {
-      "nombreClase": "Calculo",
-      "cantidadAlumnos": "3947",
-      "profesor": "Matilde Gomez",
-      "id": 1
-    },
-    {
-      "nombreClase": "Calculo 2",
-      "cantidadAlumnos": "1235",
-      "profesor": "Alexandre Miquel",
+      "alumno": 2,
+      "curso": 1,
       "id": 2
     },
     {
-      "nombreClase": "Geometría y Álgebra Lineal",
-      "cantidadAlumnos": "789",
-      "profesor": "Manuel Perez",
+      "alumno": 4,
+      "curso": 3,
       "id": 3
     }
   ],
@@ -73,34 +59,28 @@
   ],
   "usuarios": [
     {
-      "usuario": "d",
-      "email": "d@d",
+      "usuario": "Test",
+      "email": "test@gmail.com",
       "password": "123",
+      "rol": "Usuario",
+      "token": "kmppl0jgmgmbejr7oclfch6owoxd4t5tb-f5kti54lpxgfe1otwg2nqpq9la6bhc9a",
       "id": 1
     },
     {
-      "usuario": "diego",
-      "email": "diego@gmail.com",
+      "usuario": "Admin",
+      "email": "admin@gmail.com",
       "password": "123",
+      "rol": "Administrador",
+      "token": "b6e2hvhanoaf92f3r6ubaboia3d4m14w8-nvyjpmftzwahptuff8vkvm8fu7if3ndo3",
       "id": 2
     },
     {
-      "usuario": "diego2",
-      "email": "diego2@gmail.com",
+      "usuario": "Diego",
+      "email": "diego@gmail.com",
       "password": "123",
+      "rol": "Usuario",
+      "token": "",
       "id": 3
-    },
-    {
-      "usuario": "diego3",
-      "email": "diego3@gmail.com",
-      "password": "123",
-      "id": 4
-    },
-    {
-      "usuario": "usuario",
-      "email": "usuarioApellido@gmail.com",
-      "password": "123456",
-      "id": 5
     }
   ]
 }

@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { Observable, map } from 'rxjs';
+import { baseUrl } from 'src/environments/environments';
 
 @Injectable({
   providedIn: 'root',
@@ -17,19 +18,19 @@ export class AlumnosService {
   }
 
   addAlumno(data: any): Observable<any> {
-    return this._http.post('http://localhost:3000/alumnos', data);
+    return this._http.post(`${baseUrl}alumnos`, data);
   }
 
   updateAlumno(id: number, data: any): Observable<any> {
-    return this._http.put(`http://localhost:3000/alumnos/${id}`, data);
+    return this._http.put(`${baseUrl}alumnos/${id}`, data);
   }
 
   getAlumnoList(): Observable<any> {
-    return this._http.get('http://localhost:3000/alumnos');
+    return this._http.get(`${baseUrl}alumnos`);
   }
 
   deleteAlumno(id: number): Observable<any> {
-    return this._http.delete(`http://localhost:3000/alumnos/${id}`);
+    return this._http.delete(`${baseUrl}alumnos/${id}`);
   }
 
 }

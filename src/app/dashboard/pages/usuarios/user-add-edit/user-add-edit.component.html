@@ -1,0 +1,67 @@
+<div mat-dialog-title>
+  <h1>Usuario</h1>
+</div>
+
+<form [formGroup]="userForm" (ngSubmit)="onFormSubmit()">
+  <div mat-dialog-content class="content">
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Usuario</mat-label>
+        <input
+          matInput
+          placeholder="Diego"
+          type="text"
+          formControlName="usuario"
+        />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          placeholder="diego@gmail.com"
+          type="email"
+          formControlName="email"
+        />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input
+          matInput
+          placeholder=""
+          type="password"
+          formControlName="password"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Rol</mat-label>
+        <mat-select formControlName="rol">
+          <mat-option [value]="tiposRol[0]">
+            {{ tiposRol[0] }}
+          </mat-option>
+          <mat-option [value]="tiposRol[1]">
+            {{ tiposRol[1] }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div mat-dialog-actions class="action">
+    <button mat-raised-button type="button" [mat-dialog-close]="false">
+      Cancel
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="userForm.invalid"
+    >
+      {{ data ? "Update" : "Save" }}
+    </button>
+  </div>
+
+</form>

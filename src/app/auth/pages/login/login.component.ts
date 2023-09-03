@@ -9,8 +9,8 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 export class LoginComponent {
 
-  public emailControl = new FormControl('usuarioApellido@gmail.com', [Validators.required, Validators.email]);
-  public passwordControl = new FormControl('123456', [Validators.required]);
+  public emailControl = new FormControl('test@gmail.com', [Validators.required, Validators.email]);
+  public passwordControl = new FormControl('123', [Validators.required]);
 
   public loginForm = new FormGroup({
     email: this.emailControl,
@@ -26,5 +26,4 @@ export class LoginComponent {
       this.authService.login(this.loginForm.getRawValue())
     }
   }
-
 }

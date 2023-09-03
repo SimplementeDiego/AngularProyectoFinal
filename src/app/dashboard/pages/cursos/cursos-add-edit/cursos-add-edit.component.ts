@@ -37,7 +37,6 @@ export class CursosAddEditComponent implements OnInit {
           .updateCurso(this.data.id, this.cursoForm.value)
           .subscribe({
             next: (val: any) => {
-              alert('Curso modificado.');
               this._dialogRef.close(true);
             },
             error: (err: any) => {
@@ -47,7 +46,6 @@ export class CursosAddEditComponent implements OnInit {
       } else {
         this.cursosService.addCurso(this.cursoForm.value).subscribe({
           next: (val: any) => {
-            alert('Curso agregado correctamente.');
             this._dialogRef.close(true);
           },
           error: (err: any) => {

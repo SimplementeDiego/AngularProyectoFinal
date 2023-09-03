@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-table',
@@ -7,6 +8,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 
 export class TableComponent {
+
+  constructor(private auth: AuthService){
+
+  }
+
+  rol: any = this.auth.getRol();
 
   @Input()
   displayedColumns: string[] = [];
@@ -19,6 +26,9 @@ export class TableComponent {
 
   @Output()
   editButton = new EventEmitter<any>();
+
+  @Output()
+  showButton = new EventEmitter<any>();
 
   @Output()
   applyFilter = new EventEmitter<any>();

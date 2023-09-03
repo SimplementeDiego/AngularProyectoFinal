@@ -24,12 +24,15 @@
           <mat-error>CAMPO INVALIDO</mat-error>
         </mat-form-field>
       </div>
-      <div>
-        <button (click)="register()" mat-flat-button color="primary">Registrarse</button>
+      <div class="botones mtop">
+        <div>
+          <button (click)="register()" mat-flat-button color="primary">Registrarse</button>
+        </div>
+        <div>
+          <a routerLink="../login"><button mat-flat-button color="accent">Ir al login</button></a>
+        </div>
       </div>
-      <div class="mtop">
-        <a routerLink="../login"><button mat-flat-button color="primary">LogIn</button></a>
-      </div>
+
     </div>
   </div>
 </div>

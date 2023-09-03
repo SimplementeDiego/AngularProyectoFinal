@@ -38,7 +38,6 @@ export class StudAddEditComponent implements OnInit {
           .updateAlumno(this.data.id, this.studForm.value)
           .subscribe({
             next: (val: any) => {
-              alert('Student updated!');
               this._dialogRef.close(true);
             },
             error: (err: any) => {
@@ -48,7 +47,6 @@ export class StudAddEditComponent implements OnInit {
       } else {
         this._alumnosService.addAlumno(this.studForm.value).subscribe({
           next: (val: any) => {
-            alert('Student added succesfully');
             this._dialogRef.close(true);
           },
           error: (err: any) => {
