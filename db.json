@@ -29,6 +29,11 @@
       "alumno": 4,
       "curso": 3,
       "id": 3
+    },
+    {
+      "alumno": 2,
+      "curso": 4,
+      "id": 4
     }
   ],
   "Cursos": [

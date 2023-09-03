@@ -3,3 +3,10 @@
   <p>Nombre: {{this.data | nombreCompleto}}</p>
   <p>Email: {{this.data.email}}</p>
 </div>
+<h1 mat-dialog-title>Cursos</h1>
+<div mat-dialog-content >
+
+  <p *ngIf="cursos && cursos.length == 0">Ningun Curso</p>
+  <p *ngFor="let item of cursos"> {{item.areaCurso}} </p>
+
+</div>
