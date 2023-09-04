@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ClasesComponent } from './clases.component';
+import { InscripcionesComponent } from './inscripciones.component';
 
 const routes: Routes = [
-  {path:"table", component: ClasesComponent},
+  {path:"table", component: InscripcionesComponent},
   {path:'**', redirectTo: 'table'},
 ];
 
@@ -11,4 +11,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ClasesRoutingModule { }
+export class InscripcionesRoutingModule { }

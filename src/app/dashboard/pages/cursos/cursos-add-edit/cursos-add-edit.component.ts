@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CursosService } from 'src/app/core/services/cursos.service';
+import { CursoConId } from '../../models';
+import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
 
 @Component({
   selector: 'app-cursos-add-edit',
@@ -22,7 +24,8 @@ export class CursosAddEditComponent implements OnInit {
   constructor(
     private _dialogRef: MatDialogRef<CursosAddEditComponent>,
     private cursosService: CursosService,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    private matDialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public data: CursoConId
   ) {
   }
 
@@ -32,24 +35,35 @@ export class CursosAddEditComponent implements OnInit {
 
   onFormSubmit() {
     if (this.cursoForm.valid) {
+
+      const información = {
+        areaCurso: this.cursoForm.value.areaCurso || '',
+        duracion: this.cursoForm.value.duracion || '',
+        certificado: this.cursoForm.value.certificado || '',
+      };
+
       if (this.data) {
         this.cursosService
-          .updateCurso(this.data.id, this.cursoForm.value)
+          .updateCurso(this.data.id, información)
           .subscribe({
-            next: (val: any) => {
+            next: () => {
               this._dialogRef.close(true);
             },
-            error: (err: any) => {
-              console.error(err);
+            error: () => {
+              this.matDialog.open(PopupComponent, {
+                data: 'Ocurrio un error. Intentalo mas tarde.',
+              });
             },
           });
       } else {
-        this.cursosService.addCurso(this.cursoForm.value).subscribe({
-          next: (val: any) => {
+        this.cursosService.addCurso(información).subscribe({
+          next: () => {
             this._dialogRef.close(true);
           },
-          error: (err: any) => {
-            console.error(err);
+          error: () => {
+            this.matDialog.open(PopupComponent, {
+              data: 'Ocurrio un error. Intentalo mas tarde.',
+            });
           },
         });
       }

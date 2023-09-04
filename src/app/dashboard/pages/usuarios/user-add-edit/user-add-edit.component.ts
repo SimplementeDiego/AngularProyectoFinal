@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UsuariosService } from 'src/app/core/services/usuarios.service';
-import { StudAddEditComponent } from '../../alumnos/stud-add-edit/stud-add-edit.component';
+import { AlumnosAddEditComponent } from '../../alumnos/alumnos-add-edit/alumnos-add-edit.component';
 
 @Component({
   selector: 'app-user-add-edit',
@@ -28,7 +28,7 @@ export class UserAddEditComponent {
   });
 
   constructor(
-    private _dialogRef: MatDialogRef<StudAddEditComponent>,
+    private _dialogRef: MatDialogRef<AlumnosAddEditComponent>,
     private _usuariosService: UsuariosService ,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {

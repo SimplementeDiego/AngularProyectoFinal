@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
-import { StudAddEditComponent } from 'src/app/dashboard/pages/alumnos/stud-add-edit/stud-add-edit.component';
+import { AlumnosAddEditComponent } from 'src/app/dashboard/pages/alumnos/alumnos-add-edit/alumnos-add-edit.component';
 import { Observable, map } from 'rxjs';
 import { AlumnosService } from 'src/app/core/services/alumnos.service';
 import { PopupVerifyComponent } from '../../../shared/components/popup-verify/popup-verify.component';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
-import { ClasesService } from 'src/app/core/services/clases.service';
+import { InscripcionesService } from 'src/app/core/services/inscripciones.service';
 import { AlumnosInfoComponent } from './alumnos-info/alumnos-info.component';
+import { AlumnoConId } from '../models';
 
 @Component({
   selector: 'app-alumnos',
@@ -16,7 +17,7 @@ import { AlumnosInfoComponent } from './alumnos-info/alumnos-info.component';
   styleUrls: ['./alumnos.component.css'],
 })
 export class AlumnosComponent {
-  estudiantes: Observable<Array<any>>;
+  alumnos: Observable<Array<AlumnoConId>>;
   displayedColumns: string[];
   titulo: string = 'Alumnos ABM';
 
@@ -25,17 +26,17 @@ export class AlumnosComponent {
     private matDialog: MatDialog,
     private verifyDialog: MatDialog,
     private snackbar: MatSnackBar,
-    private _inscripcionesService: ClasesService
+    private _inscripcionesService: InscripcionesService
   ) {
-    this.estudiantes = this.alumnosService.getAlumnoList();
+    this.alumnos = this.alumnosService.getAlumnoList();
     this.displayedColumns = this.alumnosService.displayedColumns;
   }
 
   getAlumnosList() {
-    this.estudiantes = this.alumnosService.getAlumnoList();
+    this.alumnos = this.alumnosService.getAlumnoList();
   }
 
-  deleteAlumno(id: number) {
+  deleteAlumno( id: number ) {
     this.verifyDialog
       .open(PopupVerifyComponent)
       .afterClosed()
@@ -44,11 +45,11 @@ export class AlumnosComponent {
           if (val) {
             this._inscripcionesService.deleteInscripcionesAlumno(id)
             this.alumnosService.deleteAlumno(id).subscribe({
-              next: (res) => {
+              next: () => {
                 this.snackbar.open("Alumno Eliminado", "Cerrar",{duration:5000});
                 this.getAlumnosList();
               },
-              error: (err) => {
+              error: () => {
                 this.matDialog.open(PopupComponent, {
                   data: 'Ocurrio un error. Intentalo mas tarde.',
                 });
@@ -61,7 +62,7 @@ export class AlumnosComponent {
 
   addAlumno(): void {
     this.matDialog
-      .open(StudAddEditComponent)
+      .open(AlumnosAddEditComponent)
       .afterClosed()
       .subscribe({
         next: (v) => {
@@ -74,15 +75,15 @@ export class AlumnosComponent {
       });
   }
 
-  showButton(evento: any){
+  showButton( alumno: AlumnoConId ){
 
-    this.matDialog.open(AlumnosInfoComponent, { data:evento });
+    this.matDialog.open(AlumnosInfoComponent, { data:alumno });
 
   }
 
-  updateAlumno(student: any): void {
+  updateAlumno( alumno: AlumnoConId ): void {
     this.matDialog
-      .open(StudAddEditComponent, { data: student })
+      .open(AlumnosAddEditComponent, { data: alumno })
       .afterClosed()
       .subscribe({
         next: (studentUpdated) => {
@@ -97,14 +98,15 @@ export class AlumnosComponent {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
 
-    this.estudiantes = this.alumnosService.getAlumnoList().pipe(
+    this.alumnos = this.alumnosService.getAlumnoList().pipe(
       map((valor) => {
-        return valor.filter((estudiante: any) => {
-          return estudiante.firstName
+        return valor.filter((alumno: AlumnoConId) => {
+          return alumno.firstName
             .toLowerCase()
             .startsWith(filterValue.toLowerCase());
         });
       })
     );
   }
+
 }

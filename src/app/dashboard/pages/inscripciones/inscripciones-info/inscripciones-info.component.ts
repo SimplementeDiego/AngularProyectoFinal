@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { InscripciónConInfoConId } from '../../models';
 
 @Component({
   selector: 'app-inscripciones-info',
@@ -8,7 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class InscripcionesInfoComponent {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data:any  ,private ref: MatDialogRef<InscripcionesInfoComponent>){
+  constructor(@Inject(MAT_DIALOG_DATA) public data:InscripciónConInfoConId  ,private ref: MatDialogRef<InscripcionesInfoComponent>){
 
   }
 

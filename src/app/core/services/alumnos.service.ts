@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Alumno, AlumnoConId } from 'src/app/dashboard/pages/models';
 
 import { baseUrl } from 'src/environments/environments';
 
@@ -11,25 +12,23 @@ export class AlumnosService {
 
   displayedColumns: string[] = ['id', 'fullname', 'email', 'action'];
 
-  estudiantes:any = [];
-
   constructor( private _http: HttpClient ) {
 
   }
 
-  addAlumno(data: any): Observable<any> {
+  addAlumno(data: Alumno): Observable<Object> {
     return this._http.post(`${baseUrl}alumnos`, data);
   }
 
-  updateAlumno(id: number, data: any): Observable<any> {
+  updateAlumno(id: number, data: Alumno): Observable<Object> {
     return this._http.put(`${baseUrl}alumnos/${id}`, data);
   }
 
-  getAlumnoList(): Observable<any> {
-    return this._http.get(`${baseUrl}alumnos`);
+  getAlumnoList(): Observable<AlumnoConId[]> {
+    return this._http.get<AlumnoConId[]>(`${baseUrl}alumnos`);
   }
 
-  deleteAlumno(id: number): Observable<any> {
+  deleteAlumno(id: number): Observable<Object> {
     return this._http.delete(`${baseUrl}alumnos/${id}`);
   }
 

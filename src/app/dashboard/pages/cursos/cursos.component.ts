@@ -8,6 +8,7 @@ import { PopupComponent } from 'src/app/shared/components/popup/popup.component'
 import { PopupVerifyComponent } from 'src/app/shared/components/popup-verify/popup-verify.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CursosInfoComponent } from './cursos-info/cursos-info.component';
+import { CursoConId } from '../models';
 
 @Component({
   selector: 'app-cursos',
@@ -15,14 +16,13 @@ import { CursosInfoComponent } from './cursos-info/cursos-info.component';
   styleUrls: ['./cursos.component.css'],
 })
 export class CursosComponent {
-  cursos: Observable<Array<any>>;
+  cursos: Observable<Array<CursoConId>>;
   displayedColumns: string[];
   titulo: string = 'Cursos ABM';
 
   constructor(
     private cursosService: CursosService,
     private matDialog: MatDialog,
-    private dialog: MatDialog,
     private verifyDialog: MatDialog,
     private snackbar: MatSnackBar
   ) {
@@ -30,10 +30,8 @@ export class CursosComponent {
     this.displayedColumns = this.cursosService.displayedColumns;
   }
 
-  showButton(event: any){
-
+  showButton(event: CursoConId){
     this.matDialog.open(CursosInfoComponent, { data: event })
-
   }
 
   getCursos() {
@@ -48,11 +46,11 @@ export class CursosComponent {
         next: (val) => {
           if (val) {
             this.cursosService.deleteCurso(id).subscribe({
-              next: (res) => {
+              next: () => {
                 this.snackbar.open("Curso Eliminado", "Cerrar",{duration:5000});
                 this.getCursos();
               },
-              error: (err) => {
+              error: () => {
                 this.matDialog.open(PopupComponent, {
                   data: 'Ocurrio un error. Intentalo mas tarde.',
                 });
@@ -78,7 +76,7 @@ export class CursosComponent {
       });
   }
 
-  editCurso(curso: any): void {
+  editCurso(curso: CursoConId): void {
     this.matDialog
       .open(CursosAddEditComponent, { data: curso })
       .afterClosed()
@@ -93,11 +91,10 @@ export class CursosComponent {
   }
 
   applyFilter(event: Event) {
-    //this.alumnosService.applyFilter(event);
     const filterValue = (event.target as HTMLInputElement).value;
     this.cursos = this.cursosService.getCursoList().pipe(
       map((valor) => {
-        return valor.filter((curso: any) => {
+        return valor.filter((curso: CursoConId) => {
           return curso.areaCurso
             .toLowerCase()
             .startsWith(filterValue.toLowerCase());

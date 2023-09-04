@@ -19,7 +19,7 @@ export class TableComponent {
   displayedColumns: string[] = [];
 
   @Input()
-  dataSource: Array<any> = [];
+  dataSource: Array<any> | null = [];
 
   @Output()
   deleteButton = new EventEmitter<any>();

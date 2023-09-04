@@ -2,7 +2,7 @@
   <h1>Alumno</h1>
 </div>
 
-<form [formGroup]="studForm" (ngSubmit)="onFormSubmit()">
+<form [formGroup]="alumnosForm" (ngSubmit)="onFormSubmit()">
   <div mat-dialog-content class="content">
     <div class="row">
       <mat-form-field appearance="outline">
@@ -45,7 +45,7 @@
       mat-raised-button
       color="primary"
       type="submit"
-      [disabled]="studForm.invalid"
+      [disabled]="alumnosForm.invalid"
     >
       {{ data ? "Update" : "Save" }}
     </button>

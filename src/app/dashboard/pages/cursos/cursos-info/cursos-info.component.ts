@@ -1,32 +1,26 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { ClasesService } from 'src/app/core/services/clases.service';
+import { InscripcionesService } from 'src/app/core/services/inscripciones.service';
+import { AlumnoConId, CursoConId } from '../../models';
 
 @Component({
   selector: 'app-cursos-info',
   templateUrl: './cursos-info.component.html',
   styleUrls: ['./cursos-info.component.css']
 })
-export class CursosInfoComponent implements OnInit {
+export class CursosInfoComponent {
 
-  public inscripciones$: Observable<any>;
+  public alumnos: Array<AlumnoConId> = [];
 
-  public alumnos: any = [];
+  constructor(@Inject(MAT_DIALOG_DATA) public data: CursoConId  ,private ref: MatDialogRef<CursosInfoComponent>, private _inscripcionesService: InscripcionesService){
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data:any  ,private ref: MatDialogRef<CursosInfoComponent>, private _inscripcionesService: ClasesService){
-
-    this.inscripciones$ = this._inscripcionesService.inscripciones$
-    this._inscripcionesService.getAlumnosCompletos(data);
-
-  }
-
-  ngOnInit(): void {
-    this.inscripciones$.subscribe({
+    this._inscripcionesService.alumnosDeInscripciones$.subscribe({
       next: (res)=>{
-        this.alumnos = res;
+        this.alumnos = res || [];
       }
     });
+    this._inscripcionesService.getAlumnosCompletos(data);
+
   }
 
 }
