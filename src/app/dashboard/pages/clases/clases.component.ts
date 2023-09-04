@@ -3,13 +3,13 @@ import { Component } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Observable, tap, map, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { ClasesService } from 'src/app/core/services/clases.service';
 import { ClassAddEditComponent } from 'src/app/dashboard/pages/clases/class-add-edit/class-add-edit.component';
 import { PopupVerifyComponent } from 'src/app/shared/components/popup-verify/popup-verify.component';
 import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
 import { baseUrl } from 'src/environments/environments';
-import { UserInfoComponent } from '../usuarios/user-info/user-info.component';
+import { InscripcionesInfoComponent } from './inscripciones-info/inscripciones-info.component';
 
 @Component({
   selector: 'app-clases',
@@ -32,6 +32,12 @@ export class ClasesComponent {
   ) {
     this.getClases();
     this.displayedColumns = this.clasesService.displayedColumns;
+  }
+
+  showButton(evento: any){
+
+    this.matDialog.open(InscripcionesInfoComponent, {data: evento})
+
   }
 
   getClases() {
@@ -60,6 +66,7 @@ export class ClasesComponent {
                   this.array.push({ id: clase.id, alumno: alumno[0], curso: curso[0] })
 
                   if (this.array.length==cantidad){
+                    this.array = this.array.sort((a, b) => a.id - b.id);
                     this._inscripciones$.next(this.array);
                   }
 

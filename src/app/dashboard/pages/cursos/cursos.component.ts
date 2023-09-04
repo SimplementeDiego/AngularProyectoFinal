@@ -7,6 +7,7 @@ import { CursosAddEditComponent } from './cursos-add-edit/cursos-add-edit.compon
 import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
 import { PopupVerifyComponent } from 'src/app/shared/components/popup-verify/popup-verify.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CursosInfoComponent } from './cursos-info/cursos-info.component';
 
 @Component({
   selector: 'app-cursos',
@@ -27,6 +28,12 @@ export class CursosComponent {
   ) {
     this.cursos = this.cursosService.getCursoList();
     this.displayedColumns = this.cursosService.displayedColumns;
+  }
+
+  showButton(event: any){
+
+    this.matDialog.open(CursosInfoComponent, { data: event })
+
   }
 
   getCursos() {

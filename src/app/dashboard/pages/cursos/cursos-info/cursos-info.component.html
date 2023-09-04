@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Información de Alumno</h1>
+<div mat-dialog-content>
+  <p>Area: {{this.data.areaCurso}}</p>
+  <p>Duración: {{this.data.duracion}}</p>
+  <p>Certificado: {{this.data.certificado}}</p>
+</div>
+<h1 mat-dialog-title>Alumnos</h1>
+<div mat-dialog-content >
+
+  <p *ngIf="alumnos && alumnos.length == 0">Ningun Alumno</p>
+  <p *ngFor="let item of alumnos"> {{item | nombreCompleto}} </p>
+
+</div>

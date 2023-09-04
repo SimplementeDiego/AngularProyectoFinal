@@ -4,11 +4,13 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CursosComponent } from './cursos.component';
 import { CursosAddEditComponent } from '../cursos/cursos-add-edit/cursos-add-edit.component';
 import { CursosRoutingModule } from './cursos-routing.module';
+import { CursosInfoComponent } from './cursos-info/cursos-info.component';
 
 @NgModule({
   declarations: [
     CursosComponent,
-    CursosAddEditComponent
+    CursosAddEditComponent,
+    CursosInfoComponent
   ],
   imports: [
     CommonModule,
@@ -17,7 +19,8 @@ import { CursosRoutingModule } from './cursos-routing.module';
   ],
   exports: [
     CursosComponent,
-    CursosAddEditComponent
+    CursosAddEditComponent,
+    CursosInfoComponent
   ]
 })
 export class CursosModule { }

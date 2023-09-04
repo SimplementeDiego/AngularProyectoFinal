@@ -9,20 +9,27 @@ import { PopupComponent } from 'src/app/shared/components/popup/popup.component'
 import { CursosService } from './cursos.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClasesService {
-
-  displayedColumns: string[] = ['id', 'alumnoInscripcion', 'cursoInscripcion','action'];
+  displayedColumns: string[] = [
+    'id',
+    'alumnoInscripcion',
+    'cursoInscripcion',
+    'action',
+  ];
 
   private _inscripciones$ = new BehaviorSubject<any | null>(null);
   public inscripciones$ = this._inscripciones$.asObservable();
 
   clases = [];
 
-  constructor( private _http: HttpClient, private _alumnosService: AlumnosService, private dialog: MatDialog, private _cursosService: CursosService ) {
-
-  }
+  constructor(
+    private _http: HttpClient,
+    private _alumnosService: AlumnosService,
+    private dialog: MatDialog,
+    private _cursosService: CursosService
+  ) {}
 
   addClase(data: any): Observable<any> {
     return this._http.post(`${baseUrl}clases`, data);
@@ -36,84 +43,78 @@ export class ClasesService {
     return this._http.get(`${baseUrl}clases`);
   }
 
-  getCursosCompletos(data: any){
-
+  getCursosCompletos(data: any) {
     const cantidad = data.length;
 
     let cursosConInfo: Array<any> = [];
 
     this.getClaseList().subscribe({
-      next: (inscripciones: Array<any>)=>{
-
+      next: (inscripciones: Array<any>) => {
         this._cursosService.getCursoList().subscribe({
-          next: (cursos: Array<any>)=>{
+          next: (cursos: Array<any>) => {
+            const filtrado = inscripciones.filter((item) => {
+              if (item.alumno == data.id) {
+                return item;
+              }
+            });
 
-            const filtrado = inscripciones.filter( (item)=> { if ( item.alumno == data.id){ return item } } )
-
-            filtrado.forEach( (inscripcion) => {
-
-              cursos.forEach( (curso) => {
-
-                if (curso.id==inscripcion.curso){
+            filtrado.forEach((inscripcion) => {
+              cursos.forEach((curso) => {
+                if (curso.id == inscripcion.curso) {
                   cursosConInfo.push(curso);
                 }
-
               });
-
             });
 
             this._inscripciones$.next(cursosConInfo);
+          },
+        });
+      },
+    });
+  }
 
+  getAlumnosCompletos(data: any) {
+
+    let alumnosConInfo: Array<any> = [];
+
+    this.getClaseList().subscribe({
+      next: (inscripciones: Array<any>) => {
+        this._alumnosService.getAlumnoList().subscribe({
+          next: (alumnos: Array<any>) => {
+            const filtrado = inscripciones.filter((item) => {
+              if (item.curso == data.id) {
+                return item;
+              }
+            });
+
+            filtrado.forEach((inscripcion) => {
+              alumnos.forEach((alumno) => {
+                if (alumno.id == inscripcion.alumno) {
+                  alumnosConInfo.push(alumno);
+                }
+              });
+            });
+            this._inscripciones$.next(alumnosConInfo);
+          },
+        });
+      },
+    });
+  }
+
+  deleteInscripcionesAlumno(id: number) {
+    this._http.get(`${baseUrl}clases`).subscribe({
+      next: (res: any) => {
+        res.forEach((element: any) => {
+          if (id == element.alumno) {
+            this.deleteClase(element.id).subscribe();
           }
         });
 
-      }
-    });
-
-  }
-
-  deleteInscripcionesAlumno( id: number ){
-
-    this._alumnosService.getAlumnoList().subscribe({
-      next: (res: any) => {
-        const USER: any[] = res.filter((obj: any) => {
-          return obj.id === id;
-        });
-        if (
-          USER.length != 0
-        ) {
-
-          this._http.get(`${baseUrl}clases`, {
-            params: {
-              alumno: res
-            },
-          })
-          .subscribe({
-              next: (res : any)=>{
-                res.forEach((element : any) => {
-                  this.deleteClase(element.id).subscribe();
-                });
-
-                this.dialog.open(PopupComponent, {
-                  data: `Eliminadas ${res.length} inscripciones.`,
-                });
-
-              }
-          });
-
-        } else {
-          this.dialog.open(PopupComponent, {
-            data: 'Error.',
-          });
-        }
-      },
-      error: () => {
         this.dialog.open(PopupComponent, {
-          data: 'Ocurrio un error. Intentalo mas tarde.',
+          data: `Eliminadas ${res.length} inscripciones.`,
         });
       },
     });
-
   }
 
   deleteClase(id: number): Observable<any> {
