@@ -13,4 +13,8 @@ export class InscripcionesInfoComponent {
 
   }
 
+  close(){
+    this.ref.close();
+  }
+
 }

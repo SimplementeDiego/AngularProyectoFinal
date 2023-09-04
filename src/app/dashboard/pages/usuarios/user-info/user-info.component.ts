@@ -13,4 +13,8 @@ export class UserInfoComponent  {
 
   }
 
+  close(){
+    this.ref.close();
+  }
+
 }

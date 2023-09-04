@@ -11,3 +11,6 @@
   <p *ngFor="let item of alumnos"> {{item | nombreCompleto}} </p>
 
 </div>
+<div mat-dialog-actions class="action">
+  <button mat-raised-button color="primary" (click)="close()">Close</button>
+</div>

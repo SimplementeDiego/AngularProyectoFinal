@@ -3,3 +3,6 @@
   <p>Alumno: {{this.data.alumno | nombreCompleto}}</p>
   <p>Curso: {{this.data.curso.areaCurso}}</p>
 </div>
+<div mat-dialog-actions class="action">
+  <button mat-raised-button color="primary" (click)="close()">Close</button>
+</div>

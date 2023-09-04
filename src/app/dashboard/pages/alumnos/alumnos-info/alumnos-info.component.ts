@@ -46,4 +46,8 @@ export class AlumnosInfoComponent implements OnInit {
 
   }
 
+  close(){
+    this.ref.close();
+  }
+
 }

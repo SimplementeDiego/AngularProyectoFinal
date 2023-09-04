@@ -44,5 +44,9 @@ export class CursosInfoComponent implements OnInit{
 
   }
 
+  close(){
+    this.ref.close();
+  }
+
 }
 
