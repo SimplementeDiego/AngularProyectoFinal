@@ -1,9 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CursosService } from 'src/app/core/services/cursos.service';
 import { CursoConId } from '../../models';
-import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
 
 @Component({
   selector: 'app-cursos-add-edit',
@@ -24,7 +23,6 @@ export class CursosAddEditComponent implements OnInit {
   constructor(
     private _dialogRef: MatDialogRef<CursosAddEditComponent>,
     private cursosService: CursosService,
-    private matDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: CursoConId
   ) {
   }
@@ -43,29 +41,11 @@ export class CursosAddEditComponent implements OnInit {
       };
 
       if (this.data) {
-        this.cursosService
-          .updateCurso(this.data.id, información)
-          .subscribe({
-            next: () => {
-              this._dialogRef.close(true);
-            },
-            error: () => {
-              this.matDialog.open(PopupComponent, {
-                data: 'Ocurrio un error. Intentalo mas tarde.',
-              });
-            },
-          });
+        this.cursosService.updateCurso(this.data.id, información)
+        this._dialogRef.close(true);
       } else {
-        this.cursosService.addCurso(información).subscribe({
-          next: () => {
-            this._dialogRef.close(true);
-          },
-          error: () => {
-            this.matDialog.open(PopupComponent, {
-              data: 'Ocurrio un error. Intentalo mas tarde.',
-            });
-          },
-        });
+        this.cursosService.addCurso(información)
+        this._dialogRef.close(true);
       }
     }
   }

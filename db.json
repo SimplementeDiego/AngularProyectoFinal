@@ -1,38 +1,39 @@
 {
   "alumnos": [
     {
-      "firstName": "Juan",
+      "firstName": "Diego",
+      "lastName": "Furrer",
+      "email": "diego@gmail.com",
+      "id": 1
+    },
+    {
+      "firstName": "Jose",
       "lastName": "Perez",
       "email": "jperez@gmail.com",
       "id": 2
     },
     {
-      "firstName": "Diego",
-      "lastName": "Furrer",
-      "email": "diego@gmail.com",
+      "firstName": "Josue",
+      "lastName": "Josue",
+      "email": "josue@gmail.com",
       "id": 3
     }
   ],
   "clases": [
     {
-      "alumno": 2,
-      "curso": 3,
-      "id": 5
-    },
-    {
-      "alumno": 2,
+      "alumno": 3,
       "curso": 2,
-      "id": 6
-    },
-    {
-      "alumno": 2,
-      "curso": 1,
-      "id": 7
+      "id": 1
     },
     {
       "alumno": 3,
-      "curso": 4,
-      "id": 8
+      "curso": 1,
+      "id": 2
+    },
+    {
+      "alumno": 1,
+      "curso": 1,
+      "id": 3
     }
   ],
   "Cursos": [

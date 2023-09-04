@@ -6,7 +6,6 @@ import { AlumnosService } from 'src/app/core/services/alumnos.service';
 import { InscripcionesService } from 'src/app/core/services/inscripciones.service';
 import { CursosService } from 'src/app/core/services/cursos.service';
 import { AlumnoConId, CursoConId, InscripciónConId } from '../../models';
-import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
 
 @Component({
   selector: 'app-inscripciones-add-edit',
@@ -26,61 +25,39 @@ export class InscripcionesAddEditComponent implements OnInit {
   cursosOptions$: Observable<Array<CursoConId>>;
 
   constructor(
-    private _dialogRef: MatDialogRef<InscripcionesAddEditComponent>,
     private _inscripcionesService: InscripcionesService,
     private _alumnosService: AlumnosService,
     private _cursosService: CursosService,
-    private matDialog: MatDialog,
+    private _dialogRef: MatDialogRef<InscripcionesAddEditComponent>,
     @Inject(MAT_DIALOG_DATA) public data: InscripciónConId
   ) {
-    this.alumnosOptions$ = this._alumnosService.getAlumnoList();
-    this.cursosOptions$ = this._cursosService.getCursoList();
+    this.alumnosOptions$ = this._alumnosService.alumnosEmitidos$;
+    this.cursosOptions$ = this._cursosService.cursosEmitidos$;
   }
 
   ngOnInit(): void {
+    this._cursosService.getCursoList();
+    this._alumnosService.getAlumnoList();
     this.inscripcionForm.patchValue(this.data);
   }
 
   onFormSubmit() {
     if (this.inscripcionForm.valid) {
+
+      const información = {
+        alumno: this.inscripcionForm.value.alumno || '',
+        curso: this.inscripcionForm.value.curso || ''
+      }
+
       if (this.data) {
+        console.log(información)
+        this._dialogRef.close(true);
+        this._inscripcionesService.updateInscripcion(this.data.id, información)
 
-        const información = {
-          alumno: this.inscripcionForm.value.alumno || '',
-          curso: this.inscripcionForm.value.curso || ''
-        }
-
-        this._inscripcionesService
-          .updateInscripcion(this.data.id, información)
-          .subscribe({
-            next: () => {
-              this._dialogRef.close(true);
-            },
-            error: () => {
-              this.matDialog.open(PopupComponent, {
-                data: 'Ocurrio un error. Intentalo mas tarde.',
-              });
-            },
-          });
       } else {
-
-        const información = {
-
-          alumno: this.inscripcionForm.value.alumno || '',
-          curso: this.inscripcionForm.value.curso || ''
-
-        }
-
-        this._inscripcionesService.addInscripcion(información).subscribe({
-          next: () => {
-            this._dialogRef.close(true);
-          },
-          error: () => {
-            this.matDialog.open(PopupComponent, {
-              data: 'Ocurrio un error. Intentalo mas tarde.',
-            });
-          },
-        });
+        console.log(información)
+        this._dialogRef.close(true);
+        this._inscripcionesService.addInscripcion(información)
       }
     }
   }

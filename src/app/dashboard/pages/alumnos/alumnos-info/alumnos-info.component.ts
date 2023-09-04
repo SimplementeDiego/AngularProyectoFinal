@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { InscripcionesService } from 'src/app/core/services/inscripciones.service';
-import { AlumnoConId, CursoConId } from '../../models';
+import { AlumnoConId, CursoConId, InscripciónConInfoConId } from '../../models';
 
 @Component({
   selector: 'app-alumnos-info',
@@ -10,25 +10,39 @@ import { AlumnoConId, CursoConId } from '../../models';
 })
 export class AlumnosInfoComponent implements OnInit {
 
-  public cursosObservable: Observable<CursoConId[] | null>;
 
   public cursos: Array<CursoConId> = [];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: AlumnoConId  ,private ref: MatDialogRef<AlumnosInfoComponent>, private _inscripcionesService: InscripcionesService){
 
-    this.cursosObservable = this._inscripcionesService.cursosDeInscripciones$
-
-    this._inscripcionesService.getCursosCompletos(data);
 
   }
 
   ngOnInit(): void {
 
-    this.cursosObservable.subscribe({
-      next: (res)=>{
-        this.cursos = res || [];
+    this._inscripcionesService.getInscripcionList();
+
+    this._inscripcionesService.inscripcionesConInfoEmitidas$.subscribe({
+      next: (inscripciones: InscripciónConInfoConId[])=>{
+
+        this.cursos = [];
+
+        inscripciones = inscripciones.filter( (inscripcion)=>{
+          if (inscripcion.alumno.id == this.data.id){
+            return inscripcion
+          }else{
+            return undefined
+          }
+        } );
+
+
+
+        inscripciones.forEach( (inscripcion)=>{
+          this.cursos.push(inscripcion.curso);
+        } );
+
       }
-    });
+    })
 
   }
 

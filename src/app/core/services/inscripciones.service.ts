@@ -1,13 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { baseUrl } from 'src/environments/environments';
-import { AlumnosService } from './alumnos.service';
-import { MatDialog } from '@angular/material/dialog';
-import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
-import { CursosService } from './cursos.service';
 import { AlumnoConId, CursoConId, Inscripción, InscripciónConId, InscripciónConInfoConId } from 'src/app/dashboard/pages/models';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -20,164 +17,115 @@ export class InscripcionesService {
     'action',
   ];
 
-  private _inscripciones$ = new BehaviorSubject<Array<InscripciónConId> | null>(null);
-  public inscripciones$ = this._inscripciones$.asObservable();
+  private _inscripcionesEmitidas$ = new BehaviorSubject<Array<InscripciónConId>>([]);
+  public inscripcionesEmitidas$ = this._inscripcionesEmitidas$.asObservable();
 
-  private _cursosDeInscripciones$ = new BehaviorSubject<Array<CursoConId> | null>(null);
-  public cursosDeInscripciones$ = this._cursosDeInscripciones$.asObservable();
-
-  private _alumnosDeInscripciones$ = new BehaviorSubject<Array<AlumnoConId> | null>(null);
-  public alumnosDeInscripciones$ = this._alumnosDeInscripciones$.asObservable();
-
-  private _alumnosPorInscripcion$ = new BehaviorSubject<Array<InscripciónConInfoConId> | null>(null);
-  public alumnosPorInscripcion$ = this._alumnosPorInscripcion$.asObservable();
+  private _inscripcionesConInfoEmitidas$ = new BehaviorSubject<Array<InscripciónConInfoConId>>([]);
+  public inscripcionesConInfoEmitidas$ = this._inscripcionesConInfoEmitidas$.asObservable();
 
   constructor(
     private _http: HttpClient,
-    private _alumnosService: AlumnosService,
-    private dialog: MatDialog,
-    private _cursosService: CursosService
-  ) {}
+    private snackbar: MatSnackBar
+  ) {
 
-  addInscripcion( data: Inscripción ): Observable<Object> {
-    return this._http.post(`${baseUrl}clases`, data);
+
+
   }
 
-  updateInscripcion( id: number, data: Inscripción ): Observable<Object> {
-    return this._http.put(`${baseUrl}clases/${id}`, data);
+  clear(){
+    this._inscripcionesEmitidas$.next([]);
+    this._inscripcionesConInfoEmitidas$.next([]);
   }
 
-  getInscripcionList(): Observable<Array<InscripciónConId>> {
-    return this._http.get<Array<InscripciónConId>>(`${baseUrl}clases`);
-  }
+  getInscripcionList() {
+    this._http.get<Array<InscripciónConId>>(`${baseUrl}clases`).subscribe({
+      next: (inscripcionesEmitidas)=>{
+        this._inscripcionesEmitidas$.next(inscripcionesEmitidas);
 
-  getCursosCompletos(data: AlumnoConId) {
+        let cantidad = inscripcionesEmitidas.length
 
-    let cursosConInfo: Array<CursoConId> = [];
+        if (cantidad==0){
+          this._inscripcionesConInfoEmitidas$.next([]);
+        }
 
-    this.getInscripcionList().subscribe({
-      next: (inscripciones: Array<InscripciónConId>) => {
-        this._cursosService.getCursoList().subscribe({
-          next: (cursos: Array<CursoConId>) => {
+        this._http.get<AlumnoConId[]>(`${baseUrl}alumnos`).subscribe({
+          next: (alumnosEmitidos)=>{
 
-            const filtrado = inscripciones.filter((item) => {
-              if (Number(item.alumno) == data.id) {
-                return item;
-              }else{
-                return null;
+
+            this._http.get<Array<CursoConId>>(`${baseUrl}cursos`).subscribe({
+              next: (cursosEmitidos)=>{
+
+                let InscripcionesConInfo: InscripciónConInfoConId[] = [];
+
+                inscripcionesEmitidas.forEach( (inscripcion: InscripciónConId)=>{
+
+                  const alumno: AlumnoConId | undefined = alumnosEmitidos.find( (alumno: AlumnoConId) =>{
+                    if (alumno.id == Number(inscripcion.alumno)){
+                      return alumno;
+                    }else{
+                      return undefined;
+                    }
+                  })
+                  const curso: CursoConId | undefined = cursosEmitidos.find( (curso: CursoConId)=>{
+                    if (curso.id == Number(inscripcion.curso)){
+                      return curso;
+                    }else{
+                      return undefined;
+                    }
+                  })
+
+                  if (alumno){
+                    if (curso){
+                      const información = {
+                        id: inscripcion.id,
+                        alumno: alumno,
+                        curso: curso
+                      }
+
+                      InscripcionesConInfo.push(información);
+
+                    }
+                  }
+
+                } )
+
+                this._inscripcionesConInfoEmitidas$.next(InscripcionesConInfo)
+
               }
             });
 
-            filtrado.forEach((inscripcion) => {
-              cursos.forEach((curso) => {
-                if (curso.id == Number(inscripcion.curso)) {
-                  cursosConInfo.push(curso);
-                }
-              });
-            });
-
-            this._cursosDeInscripciones$.next(cursosConInfo);
-          },
-        });
-      },
-    });
-  }
-
-  getAlumnosPorInscripcion(){
-
-    let array: Array<InscripciónConInfoConId> = [];
-
-    this.getInscripcionList().subscribe({
-      next: (res)=>{
-
-        let cantidad = res.length
-
-        res.forEach((clase: any) => {
-
-          this._http
-            .get(`${baseUrl}alumnos`, {
-              params: {
-                id: clase.alumno,
-              },
-            })
-            .subscribe({
-              next: (alumno: any) => {
-
-                this._http.get(`${baseUrl}cursos`, {
-                  params: {
-                    id: clase.curso,
-                  },
-                }).subscribe( (curso: any)=>{
-
-                  array.push({ id: clase.id, alumno: alumno[0], curso: curso[0] })
-
-                  if (array.length==cantidad){
-                    array = array.sort((a, b) => a.id - b.id);
-                    this._alumnosPorInscripcion$.next(array);
-                  }
-
-                } );
-
-              },
-            });
-
+          }
         })
 
       }
     });
-
   }
 
-  getAlumnosCompletos(data: CursoConId) {
-
-    let alumnosConInfo: Array<AlumnoConId> = [];
-
-    this.getInscripcionList().subscribe({
-      next: (inscripciones: Array<InscripciónConId>) => {
-        this._alumnosService.getAlumnoList().subscribe({
-          next: (alumnos: Array<AlumnoConId>) => {
-            const filtrado = inscripciones.filter((item) => {
-              if (Number(item.curso) == data.id) {
-                return item;
-              }else{
-                return null;
-              }
-            });
-
-            filtrado.forEach((inscripcion) => {
-              alumnos.forEach((alumno) => {
-                if (alumno.id == Number(inscripcion.alumno)) {
-                  alumnosConInfo.push(alumno);
-                }
-              });
-            });
-            this._alumnosDeInscripciones$.next(alumnosConInfo);
-          },
-        });
-      },
+  addInscripcion( data: Inscripción ) {
+    return this._http.post(`${baseUrl}clases`, data).subscribe({
+      next: ()=>{
+        this.getInscripcionList()
+        this.snackbar.open("Inscripción Agregada", "Cerrar",{duration:5000});
+      }
     });
   }
 
-  deleteInscripcionesAlumno(id: number) {
-    this._http.get<Array<InscripciónConId>>(`${baseUrl}clases`).subscribe({
-      next: (res: Array<InscripciónConId>) => {
-        let cont: number = 0;
-        res.forEach((element: InscripciónConId) => {
-          if (id == Number(element.alumno)) {
-            this.deleteInscripcion(element.id).subscribe();
-            cont++;
-          }
-        });
-
-        this.dialog.open(PopupComponent, {
-          data: `Eliminadas ${cont} inscripciones.`,
-        });
-      },
+  updateInscripcion( id: number, data: Inscripción ) {
+    this._http.put(`${baseUrl}clases/${id}`, data).subscribe({
+      next: ()=>{
+        this.getInscripcionList()
+        this.snackbar.open("Inscripción Modificada", "Cerrar",{duration:5000});
+      }
     });
   }
 
-  deleteInscripcion(id: number): Observable<Object> {
-    return this._http.delete(`${baseUrl}clases/${id}`);
+  deleteInscripcion(id: number) {
+    this._http.delete(`${baseUrl}clases/${id}`).subscribe({
+      next: ()=>{
+        this.getInscripcionList()
+        this.snackbar.open("Inscripción Eliminada", "Cerrar",{duration:5000});
+      }
+    });
   }
 
 }

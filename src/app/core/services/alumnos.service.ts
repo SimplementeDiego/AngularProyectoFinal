@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Alumno, AlumnoConId } from 'src/app/dashboard/pages/models';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Alumno, AlumnoConId, InscripciónConId } from 'src/app/dashboard/pages/models';
+import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
 
 import { baseUrl } from 'src/environments/environments';
 
@@ -12,24 +15,65 @@ export class AlumnosService {
 
   displayedColumns: string[] = ['id', 'fullname', 'email', 'action'];
 
-  constructor( private _http: HttpClient ) {
+  private _alumnosEmitidos$ = new BehaviorSubject<Array<AlumnoConId>>([]);
+  public alumnosEmitidos$ = this._alumnosEmitidos$.asObservable();
+
+  constructor( private _http: HttpClient, private snackbar: MatSnackBar, private _dialog: MatDialog ) {
 
   }
 
-  addAlumno(data: Alumno): Observable<Object> {
-    return this._http.post(`${baseUrl}alumnos`, data);
+  clear(){
+    this._alumnosEmitidos$.next([]);
   }
 
-  updateAlumno(id: number, data: Alumno): Observable<Object> {
-    return this._http.put(`${baseUrl}alumnos/${id}`, data);
+  addAlumno(data: Alumno) {
+    this._http.post(`${baseUrl}alumnos`, data).subscribe({
+      next: ()=>{
+        this.snackbar.open("Alumno Agregado", "Cerrar",{duration:5000});
+        this.getAlumnoList();
+      }
+    });;
   }
 
-  getAlumnoList(): Observable<AlumnoConId[]> {
-    return this._http.get<AlumnoConId[]>(`${baseUrl}alumnos`);
+  updateAlumno(id: number, data: Alumno) {
+    this._http.put(`${baseUrl}alumnos/${id}`, data).subscribe({
+      next: ()=>{
+        this.snackbar.open("Alumno Modificado", "Cerrar",{duration:5000});
+        this.getAlumnoList();
+      }
+    });
   }
 
-  deleteAlumno(id: number): Observable<Object> {
-    return this._http.delete(`${baseUrl}alumnos/${id}`);
+  getAlumnoList() {
+    this._http.get<AlumnoConId[]>(`${baseUrl}alumnos`).subscribe({
+      next: (res)=>{
+        this._alumnosEmitidos$.next(res);
+      }
+    });
+  }
+
+  deleteAlumno(id: number) {
+
+    this._http.get<Array<InscripciónConId>>(`${baseUrl}clases?alumnos=${id}`).subscribe({
+      next: (res)=>{
+
+        if (res.length == 0){
+
+          this._http.delete(`${baseUrl}alumnos/${id}`).subscribe({
+            next: ()=>{
+              this.getAlumnoList();
+              this.snackbar.open("Alumno Eliminado", "Cerrar",{duration:5000});
+            }
+          });
+
+        }else{
+
+          this._dialog.open(PopupComponent, { data: "No se puede eliminar. El Alumno tiene inscripciones relacionadas." })
+
+        }
+      }
+    });
+
   }
 
 }

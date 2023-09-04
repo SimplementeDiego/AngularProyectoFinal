@@ -50,27 +50,11 @@ export class AlumnosAddEditComponent implements OnInit {
       };
 
       if (this.data) {
-        this._alumnosService.updateAlumno(this.data.id, información).subscribe({
-          next: () => {
-            this._dialogRef.close(true);
-          },
-          error: () => {
-            this.matDialog.open(PopupComponent, {
-              data: 'Ocurrio un error. Intentalo mas tarde.',
-            });
-          },
-        });
+        this._alumnosService.updateAlumno(this.data.id, información)
+        this._dialogRef.close(true);
       } else {
-        this._alumnosService.addAlumno(información).subscribe({
-          next: () => {
-            this._dialogRef.close(true);
-          },
-          error: () => {
-            this.matDialog.open(PopupComponent, {
-              data: 'Ocurrio un error. Intentalo mas tarde.',
-            });
-          },
-        });
+        this._alumnosService.addAlumno(información)
+        this._dialogRef.close(true);
       }
     }
   }

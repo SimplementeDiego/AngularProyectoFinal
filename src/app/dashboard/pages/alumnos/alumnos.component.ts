@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
 import { AlumnosAddEditComponent } from 'src/app/dashboard/pages/alumnos/alumnos-add-edit/alumnos-add-edit.component';
@@ -16,7 +16,7 @@ import { AlumnoConId } from '../models';
   templateUrl: './alumnos.component.html',
   styleUrls: ['./alumnos.component.css'],
 })
-export class AlumnosComponent {
+export class AlumnosComponent implements OnInit, OnDestroy{
   alumnos: Observable<Array<AlumnoConId>>;
   displayedColumns: string[];
   titulo: string = 'Alumnos ABM';
@@ -28,77 +28,49 @@ export class AlumnosComponent {
     private snackbar: MatSnackBar,
     private _inscripcionesService: InscripcionesService
   ) {
-    this.alumnos = this.alumnosService.getAlumnoList();
+    this.alumnos = this.alumnosService.alumnosEmitidos$;
     this.displayedColumns = this.alumnosService.displayedColumns;
   }
 
+  ngOnInit(): void {
+    this.getAlumnosList();
+  }
+
+  ngOnDestroy(): void {
+    this.alumnosService.clear();
+  }
+
+
   getAlumnosList() {
-    this.alumnos = this.alumnosService.getAlumnoList();
+    this.alumnosService.getAlumnoList();
   }
 
   deleteAlumno( id: number ) {
-    this.verifyDialog
-      .open(PopupVerifyComponent)
-      .afterClosed()
-      .subscribe({
-        next: (val) => {
-          if (val) {
-            this._inscripcionesService.deleteInscripcionesAlumno(id)
-            this.alumnosService.deleteAlumno(id).subscribe({
-              next: () => {
-                this.snackbar.open("Alumno Eliminado", "Cerrar",{duration:5000});
-                this.getAlumnosList();
-              },
-              error: () => {
-                this.matDialog.open(PopupComponent, {
-                  data: 'Ocurrio un error. Intentalo mas tarde.',
-                });
-              },
-            });
-          }
-        },
-      });
+    this.verifyDialog.open(PopupVerifyComponent).afterClosed().subscribe({
+      next: (val) => {
+        if (val) {
+          this.alumnosService.deleteAlumno(id)
+        }
+      },
+    });
   }
 
   addAlumno(): void {
-    this.matDialog
-      .open(AlumnosAddEditComponent)
-      .afterClosed()
-      .subscribe({
-        next: (v) => {
-          if (v) {
-            this.snackbar.open("Alumno Agregado", "Cerrar",{duration:5000});
-            this.getAlumnosList();
-          } else {
-          }
-        },
-      });
+    this.matDialog.open(AlumnosAddEditComponent);
   }
 
   showButton( alumno: AlumnoConId ){
-
     this.matDialog.open(AlumnosInfoComponent, { data:alumno });
-
   }
 
   updateAlumno( alumno: AlumnoConId ): void {
-    this.matDialog
-      .open(AlumnosAddEditComponent, { data: alumno })
-      .afterClosed()
-      .subscribe({
-        next: (studentUpdated) => {
-          if (studentUpdated) {
-            this.snackbar.open("Alumno Modificado", "Cerrar",{duration:5000});
-            this.getAlumnosList();
-          }
-        },
-      });
+    this.matDialog.open(AlumnosAddEditComponent, { data: alumno })
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
 
-    this.alumnos = this.alumnosService.getAlumnoList().pipe(
+    this.alumnos = this.alumnosService.alumnosEmitidos$.pipe(
       map((valor) => {
         return valor.filter((alumno: AlumnoConId) => {
           return alumno.firstName
