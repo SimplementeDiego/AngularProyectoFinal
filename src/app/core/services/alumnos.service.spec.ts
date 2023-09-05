@@ -28,8 +28,7 @@ describe('AlumnosService', () => {
         email: 'jose23.pedro@gmail.com',
         firstName: 'Pepo',
         lastName: 'Pepito',
-      })
-      .subscribe({});
+      });
 
     httpController.expectOne({
       method: 'POST',
@@ -41,7 +40,7 @@ describe('AlumnosService', () => {
     service = TestBed.inject(AlumnosService);
     httpController = TestBed.inject(HttpTestingController);
 
-    service.getAlumnoList().subscribe({});
+    service.getAlumnoList();
 
     httpController.expectOne({
       method: 'GET',

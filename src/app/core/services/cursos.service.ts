@@ -54,7 +54,7 @@ export class CursosService {
   }
 
   deleteCurso(id: number) {
-    this._http.get<Array<InscripciónConId>>(`${baseUrl}inscripciones?alumno=${id}`).subscribe({
+    this._http.get<Array<InscripciónConId>>(`${baseUrl}inscripciones?cursos=${id}`).subscribe({
       next: (res)=>{
 
         if (res.length == 0){
@@ -62,7 +62,7 @@ export class CursosService {
           this._http.delete(`${baseUrl}cursos/${id}`).subscribe({
             next: ()=>{
               this.getCursoList();
-              this.snackbar.open("Alumno Eliminado", "Cerrar",{duration:5000});
+              this.snackbar.open("Curso Eliminado", "Cerrar",{duration:5000});
             }
           });
 
@@ -91,7 +91,7 @@ export class CursosService {
                         this.getCursoList();
                       }
                     });
-                    this.snackbar.open("Alumno Eliminado", "Cerrar",{duration:5000});
+                    this.snackbar.open("Curso Eliminado", "Cerrar",{duration:5000});
                   }
                 });
 

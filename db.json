@@ -1,25 +1,13 @@
 {
   "alumnos": [
     {
-      "firstName": "Diego",
-      "lastName": "Furrer",
-      "email": "diego@gmail.com",
-      "id": 1
-    },
-    {
-      "firstName": "a",
-      "lastName": "a",
-      "email": "a@a",
+      "firstName": "Alejandra",
+      "lastName": "Dellepiane",
+      "email": "adellepiane@gmail.com",
       "id": 2
     }
   ],
-  "inscripciones": [
-    {
-      "alumno": 1,
-      "curso": 3,
-      "id": 2
-    }
-  ],
+  "inscripciones": [],
   "Cursos": [
     {
       "areaCurso": "C++",
