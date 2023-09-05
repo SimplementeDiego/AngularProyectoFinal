@@ -1,7 +1,7 @@
 
   <mat-toolbar color="primary">
     <span class="navbarTitle">{{titulo}}</span>
-    <span class="mr">| {{usuario.usuario | mayusc}}</span>
+    <span class="mr">| {{usuario | mayusc}}</span>
     <span class="example-spacer"></span>
 
   <button *ngIf="rol=='Administrador'" mat-raised-button (click)="agregar.emit($event)">Agregar</button>

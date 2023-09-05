@@ -7,12 +7,12 @@ import { BehaviorSubject, Observable, map, take } from 'rxjs';
 import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
 import { UsuariosService } from './usuarios.service';
 import { baseUrl } from 'src/environments/environments';
+import { Usuario, UsuarioConId, UsuarioLogIn } from 'src/app/dashboard/pages/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  users: any = [];
 
   constructor(
     private router: Router,
@@ -25,24 +25,16 @@ export class AuthService {
 
   }
 
-  private _authUser$ = new BehaviorSubject<any | null>(null);
+  private _authUser$ = new BehaviorSubject<UsuarioConId | null>(null);
   public authUser$ = this._authUser$.asObservable();
-  private rol: any = 'Usuario';
+  private rol: string = 'Usuario';
 
-  addUsuario(data: any): Observable<any> {
-    return this.usuariosService.addUsuario(data);
+  addUsuario(data: Usuario) {
+    this.usuariosService.addUsuario(data);
   }
 
   getRol() {
     return this.rol;
-  }
-
-  getUsuarioList(): void {
-    this.usuariosService.getUsuarioList().subscribe({
-      next: (res) => {
-        this.users = res;
-      },
-    });
   }
 
   isAuthenticated(): Observable<boolean> {
@@ -53,22 +45,22 @@ export class AuthService {
   }
 
   checkLocal(){
-    let storedToken: any = localStorage.getItem('token');
+    let storedToken: string = localStorage.getItem('token') || "";
     if (storedToken){
       this._http
-      .get(`${baseUrl}usuarios`, {
+      .get<Array<UsuarioConId>>(`${baseUrl}usuarios`, {
         params: {
           token: storedToken,
         },
       }).subscribe({
-        next: (res:any)=>{
-          const USER: any[] = res.filter((obj: any) => {
+        next: (res : UsuarioConId[])=>{
+          const USER: UsuarioConId[] = res.filter((obj) => {
             return obj.token === storedToken;
           });
           if (
             USER.length != 0
           ) {
-            this._authUser$.next(USER);
+            this._authUser$.next(USER[0]);
             this.rol = USER[0].rol;
             this.router.navigate(['/dashboard']);
           }
@@ -77,17 +69,17 @@ export class AuthService {
     }
   }
 
-  login(payload: any): void {
+  login(payload: UsuarioLogIn): void {
     this._http
-      .get(`${baseUrl}usuarios`, {
+      .get<Array<UsuarioConId>>(`${baseUrl}usuarios`, {
         params: {
           email: payload.email || '',
           password: payload.password || '',
         },
       })
       .subscribe({
-        next: (res: any) => {
-          const USER: any[] = res.filter((obj: any) => {
+        next: (res: UsuarioConId[]) => {
+          const USER: UsuarioConId[] = res.filter((obj) => {
             return obj.email === payload.email;
           });
           if (
@@ -98,7 +90,7 @@ export class AuthService {
 
             localStorage.setItem('token', USER[0].token)
 
-            this._authUser$.next(USER);
+            this._authUser$.next(USER[0]);
             this.rol = USER[0].rol;
             this.router.navigate(['/dashboard']);
           } else {
@@ -116,30 +108,21 @@ export class AuthService {
       });
   }
 
-  register(payload: any): void {
+  register(payload: Usuario): void {
     this._http
-      .get(`${baseUrl}usuarios`, {
+      .get<Array<UsuarioConId>>(`${baseUrl}usuarios`, {
         params: {
           email: payload.email || '',
         },
       })
       .subscribe({
-        next: (res: any) => {
-          const USER: any[] = res.filter((obj: any) => {
+        next: (res: UsuarioConId[]) => {
+          const USER = res.filter((obj) => {
             return obj.email === payload.email;
           });
 
           if (USER.length == 0) {
-            this.addUsuario(payload).subscribe({
-              next: (res) => {
-                this.router.navigate(['/auth/login']);
-              },
-              error: (err) => {
-                this.dialog.open(PopupComponent, {
-                  data: 'Ocurrio un error. Intentalo mas tarde.',
-                });
-              },
-            });
+            this.addUsuario(payload)
           } else {
             this.dialog.open(PopupComponent, {
               data: 'Email ya registrado',

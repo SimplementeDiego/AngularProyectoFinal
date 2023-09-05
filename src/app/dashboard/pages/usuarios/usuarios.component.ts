@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs/internal/Observable';
@@ -8,14 +8,15 @@ import { UserAddEditComponent } from './user-add-edit/user-add-edit.component';
 import { map } from 'rxjs';
 import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
 import { UserInfoComponent } from './user-info/user-info.component';
+import { UsuarioConId } from '../models';
 
 @Component({
   selector: 'app-usuarios',
   templateUrl: './usuarios.component.html',
   styleUrls: ['./usuarios.component.css']
 })
-export class UsuariosComponent {
-  estudiantes: Observable<Array<any>>;
+export class UsuariosComponent implements OnInit, OnDestroy {
+  usuarios: Observable<Array<UsuarioConId>>;
   displayedColumns: string[];
   titulo: string = 'Usuarios ABM';
 
@@ -23,17 +24,25 @@ export class UsuariosComponent {
     private matDialog: MatDialog,
     private verifyDialog: MatDialog,
     private snackbar: MatSnackBar,
-    private usuariosService: UsuariosService,
+    private _usuariosService: UsuariosService,
   ) {
-    this.estudiantes = this.usuariosService.getUsuarioList();
-    this.displayedColumns = this.usuariosService.displayedColumns;
+    this.displayedColumns = this._usuariosService.displayedColumns;
+    this.usuarios = this._usuariosService.usuariosEmitidos$
+  }
+
+  ngOnDestroy(): void {
+    this._usuariosService.clear();
+  }
+
+  ngOnInit(): void {
+    this._usuariosService.getUsuarioList();
   }
 
   getUsuariosList() {
-    this.estudiantes = this.usuariosService.getUsuarioList();
+    this._usuariosService.getUsuarioList();
   }
 
-  showButton(usuario: any){
+  showButton(usuario: UsuarioConId){
 
     this.matDialog.open(UserInfoComponent, { data: usuario }).afterClosed()
 
@@ -46,40 +55,20 @@ export class UsuariosComponent {
       .subscribe({
         next: (val) => {
           if (val) {
-            this.usuariosService.deleteUsuario(id).subscribe({
-              next: (res) => {
-                this.snackbar.open("Usuario Eliminado", "Cerrar",{duration:5000});
-                this.getUsuariosList();
-              },
-              error: (err) => {
-                this.matDialog.open(PopupComponent, {
-                  data: 'Ocurrio un error. Intentalo mas tarde.',
-                });
-              },
-            });
+            this._usuariosService.deleteUsuario(id)
           }
         },
       });
   }
 
   addUsuario(): void {
-    this.matDialog
-      .open(UserAddEditComponent)
-      .afterClosed()
-      .subscribe({
-        next: (v) => {
-          if (v) {
-            this.snackbar.open("Usuario Agregado", "Cerrar",{duration:5000});
-            this.getUsuariosList();
-          } else {
-          }
-        },
-      });
+    this.matDialog.open(UserAddEditComponent)
+
   }
 
-  updateUsuario(student: any): void {
+  updateUsuario(usuario: UsuarioConId): void {
     this.matDialog
-      .open(UserAddEditComponent, { data: student })
+      .open(UserAddEditComponent, { data: usuario })
       .afterClosed()
       .subscribe({
         next: (studentUpdated) => {
@@ -94,7 +83,7 @@ export class UsuariosComponent {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
 
-    this.estudiantes = this.usuariosService.getUsuarioList().pipe(
+    this.usuarios = this.usuarios.pipe(
       map((valor) => {
         return valor.filter((estudiante: any) => {
           return estudiante.firstName

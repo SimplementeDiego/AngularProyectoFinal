@@ -36,3 +36,19 @@ export interface InscripciónConInfo {
 export interface InscripciónConInfoConId extends InscripciónConInfo{
   id: number
 }
+
+export interface UsuarioLogIn {
+  email: string,
+  password: string
+}
+
+export interface Usuario extends UsuarioLogIn {
+  usuario: string,
+
+}
+
+export interface UsuarioConId extends Usuario {
+  rol: string,
+  token: string,
+  id: number
+}

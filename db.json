@@ -1,13 +1,29 @@
 {
   "alumnos": [
     {
-      "firstName": "Alejandra",
-      "lastName": "Dellepiane",
-      "email": "adellepiane@gmail.com",
-      "id": 2
+      "firstName": "Diego",
+      "lastName": "Furrer",
+      "email": "diego@gmail.com",
+      "id": 1
     }
   ],
-  "inscripciones": [],
+  "inscripciones": [
+    {
+      "alumno": 1,
+      "curso": 2,
+      "id": 1
+    },
+    {
+      "alumno": 1,
+      "curso": 6,
+      "id": 2
+    },
+    {
+      "alumno": 1,
+      "curso": 5,
+      "id": 3
+    }
+  ],
   "Cursos": [
     {
       "areaCurso": "C++",
@@ -26,16 +42,28 @@
       "duracion": "12 meses",
       "certificado": "Si",
       "id": 4
+    },
+    {
+      "areaCurso": "Psicología",
+      "duracion": "24 meses",
+      "certificado": "Depende de la pasantía",
+      "id": 5
+    },
+    {
+      "areaCurso": "Angular",
+      "duracion": "12 meses",
+      "certificado": "Si",
+      "id": 6
     }
   ],
   "usuarios": [
     {
+      "id": 1,
       "usuario": "Test",
       "email": "test@gmail.com",
       "password": "123",
       "rol": "Usuario",
-      "token": "kmppl0jgmgmbejr7oclfch6owoxd4t5tb-f5kti54lpxgfe1otwg2nqpq9la6bhc9a",
-      "id": 1
+      "token": "kmppl0jgmgmbejr7oclfch6owoxd4t5tb-f5kti54lpxgfe1otwg2nqpq9la6bhc9a"
     },
     {
       "usuario": "Admin",
@@ -46,12 +74,12 @@
       "id": 2
     },
     {
-      "usuario": "Diego",
+      "id": 3,
+      "usuario": "Diego Furrer",
       "email": "diego@gmail.com",
       "password": "123",
       "rol": "Usuario",
-      "token": "",
-      "id": 3
+      "token": ""
     }
   ]
 }

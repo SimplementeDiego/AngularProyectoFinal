@@ -34,12 +34,19 @@ export class RegisterComponent {
   constructor(private authService: AuthService) {}
 
   register(){
+
+    const información = {
+      email: this.registerForm.value.email || "",
+      password: this.registerForm.value.password || "",
+      usuario: this.registerForm.value.usuario || ""
+    }
+
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
     } else {
       let info = this.registerForm.getRawValue();
       info.token = this.token();
-      this.authService.register(info)
+      this.authService.register(información)
     }
   }
 
