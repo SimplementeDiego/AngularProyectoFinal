@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, concat } from 'rxjs';
 import { Curso, CursoConId, InscripciónConId } from 'src/app/dashboard/pages/models';
+import { PopupVerifyComponent } from 'src/app/shared/components/popup-verify/popup-verify.component';
 import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
 import { baseUrl } from 'src/environments/environments';
 
@@ -53,7 +54,7 @@ export class CursosService {
   }
 
   deleteCurso(id: number) {
-    this._http.get<Array<InscripciónConId>>(`${baseUrl}clases?cursos=${id}`).subscribe({
+    this._http.get<Array<InscripciónConId>>(`${baseUrl}clases?alumno=${id}`).subscribe({
       next: (res)=>{
 
         if (res.length == 0){
@@ -67,10 +68,40 @@ export class CursosService {
 
         }else{
 
-          this._dialog.open(PopupComponent, { data: "No se puede eliminar. El Curso tiene inscripciones relacionadas." })
+          this._dialog.open(PopupVerifyComponent, { data: "El curso tiene inscripciones relacionadas. Desea eliminar las inscripciones y el curso?" }).afterClosed().subscribe({
+            next: (res)=>{
+              if (res){
+                this._http.get<Array<InscripciónConId>>(`${baseUrl}clases?curso=${id}`).subscribe({
+                  next: (res)=>{
+
+                    let observables: Observable<any>[] = [];
+
+                    res.forEach( (elemento)=>{
+
+                      observables.push(this._http.delete(`${baseUrl}clases/${elemento.id.toString()}`));
+
+                    } )
+
+                    observables.push(this._http.delete(`${baseUrl}cursos/${id}`))
+
+                    concat(
+                      ...observables
+                    ).subscribe({
+                      next: ()=>{
+                        this.getCursoList();
+                      }
+                    });
+                    this.snackbar.open("Alumno Eliminado", "Cerrar",{duration:5000});
+                  }
+                });
+
+              }
+            }
+          });
 
         }
       }
     });
+
   }
 }

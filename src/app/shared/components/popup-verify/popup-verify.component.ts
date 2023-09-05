@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-popup-verify',
@@ -7,7 +7,7 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./popup-verify.component.css']
 })
 export class PopupVerifyComponent {
-  constructor(private ref: MatDialogRef<PopupVerifyComponent> ){}
+  constructor(private ref: MatDialogRef<PopupVerifyComponent>, @Inject(MAT_DIALOG_DATA) public data:any ){}
 
   Borrar(){
     this.ref.close(true);

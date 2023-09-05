@@ -5,9 +5,6 @@ import { AlumnosAddEditComponent } from 'src/app/dashboard/pages/alumnos/alumnos
 import { Observable, map } from 'rxjs';
 import { AlumnosService } from 'src/app/core/services/alumnos.service';
 import { PopupVerifyComponent } from '../../../shared/components/popup-verify/popup-verify.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
-import { InscripcionesService } from 'src/app/core/services/inscripciones.service';
 import { AlumnosInfoComponent } from './alumnos-info/alumnos-info.component';
 import { AlumnoConId } from '../models';
 
@@ -25,8 +22,6 @@ export class AlumnosComponent implements OnInit, OnDestroy{
     private alumnosService: AlumnosService,
     private matDialog: MatDialog,
     private verifyDialog: MatDialog,
-    private snackbar: MatSnackBar,
-    private _inscripcionesService: InscripcionesService
   ) {
     this.alumnos = this.alumnosService.alumnosEmitidos$;
     this.displayedColumns = this.alumnosService.displayedColumns;
