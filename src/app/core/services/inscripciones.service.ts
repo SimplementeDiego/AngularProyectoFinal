@@ -5,6 +5,8 @@ import { BehaviorSubject } from 'rxjs';
 import { baseUrl } from 'src/environments/environments';
 import { AlumnoConId, CursoConId, Inscripción, InscripciónConId, InscripciónConInfoConId } from 'src/app/dashboard/pages/models';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +27,8 @@ export class InscripcionesService {
 
   constructor(
     private _http: HttpClient,
-    private snackbar: MatSnackBar
+    private snackbar: MatSnackBar,
+    private _dialog: MatDialog
   ) {
 
 
@@ -91,12 +94,21 @@ export class InscripcionesService {
 
                 this._inscripcionesConInfoEmitidas$.next(InscripcionesConInfo)
 
+              },
+              error: ()=>{
+                this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
               }
             });
 
+          },
+          error: ()=>{
+            this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
           }
         })
 
+      },
+      error: ()=>{
+        this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });
   }
@@ -106,6 +118,9 @@ export class InscripcionesService {
       next: ()=>{
         this.getInscripcionList()
         this.snackbar.open("Inscripción Agregada", "Cerrar",{duration:5000});
+      },
+      error: ()=>{
+        this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });
   }
@@ -115,6 +130,9 @@ export class InscripcionesService {
       next: ()=>{
         this.getInscripcionList()
         this.snackbar.open("Inscripción Modificada", "Cerrar",{duration:5000});
+      },
+      error: ()=>{
+        this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });
   }
@@ -124,6 +142,9 @@ export class InscripcionesService {
       next: ()=>{
         this.getInscripcionList()
         this.snackbar.open("Inscripción Eliminada", "Cerrar",{duration:5000});
+      },
+      error: ()=>{
+        this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });
   }

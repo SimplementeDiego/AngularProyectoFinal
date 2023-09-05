@@ -32,6 +32,9 @@ export class CursosService {
       next: ()=>{
         this.getCursoList();
         this.snackbar.open("Curso Agregado", "Cerrar",{duration:5000});
+      },
+      error: ()=>{
+        this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });;
   }
@@ -41,6 +44,9 @@ export class CursosService {
       next: ()=>{
         this.getCursoList();
         this.snackbar.open("Curso Modificado", "Cerrar",{duration:5000});
+      },
+      error: ()=>{
+        this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });
   }
@@ -49,6 +55,9 @@ export class CursosService {
     this._http.get<Array<CursoConId>>(`${baseUrl}cursos`).subscribe({
       next: (res)=>{
         this._cursosEmitidos$.next(res);
+      },
+      error: ()=>{
+        this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });
   }
@@ -63,6 +72,9 @@ export class CursosService {
             next: ()=>{
               this.getCursoList();
               this.snackbar.open("Curso Eliminado", "Cerrar",{duration:5000});
+            },
+            error: ()=>{
+              this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
             }
           });
 
@@ -92,6 +104,9 @@ export class CursosService {
                       }
                     });
                     this.snackbar.open("Curso Eliminado", "Cerrar",{duration:5000});
+                  },
+                  error: ()=>{
+                    this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
                   }
                 });
 

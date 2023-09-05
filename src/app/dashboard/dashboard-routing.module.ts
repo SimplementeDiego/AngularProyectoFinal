@@ -6,7 +6,8 @@ const routes: Routes = [
   {path:'inscripciones', loadChildren: () => import("./pages/inscripciones/inscripciones.module").then((m) => m.InscripcionesModule)},
   {path:'cursos', loadChildren: () => import("./pages/cursos/cursos.module").then((m) => m.CursosModule)},
   {path:'usuarios', loadChildren: () => import("./pages/usuarios/usuarios.module").then((m) => m.UsuariosModule)},
-  { path:'**', redirectTo: 'alumnos' }
+  {path:'info', loadChildren: () => import("./pages/info/info.module").then((m) => m.InfoModule)},
+  { path:'**', redirectTo: 'info' }
 ];
 
 @NgModule({

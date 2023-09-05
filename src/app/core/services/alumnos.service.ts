@@ -32,6 +32,9 @@ export class AlumnosService {
       next: ()=>{
         this.snackbar.open("Alumno Agregado", "Cerrar",{duration:5000});
         this.getAlumnoList();
+      },
+      error: ()=>{
+        this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });;
   }
@@ -41,6 +44,9 @@ export class AlumnosService {
       next: ()=>{
         this.snackbar.open("Alumno Modificado", "Cerrar",{duration:5000});
         this.getAlumnoList();
+      },
+      error: ()=>{
+        this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });
   }
@@ -49,6 +55,9 @@ export class AlumnosService {
     this._http.get<AlumnoConId[]>(`${baseUrl}alumnos`).subscribe({
       next: (res)=>{
         this._alumnosEmitidos$.next(res);
+      },
+      error: ()=>{
+        this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });
   }
@@ -64,6 +73,9 @@ export class AlumnosService {
             next: ()=>{
               this.getAlumnoList();
               this.snackbar.open("Alumno Eliminado", "Cerrar",{duration:5000});
+            },
+            error: ()=>{
+              this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
             }
           });
 
@@ -97,6 +109,9 @@ export class AlumnosService {
                 });
 
               }
+            },
+            error: ()=>{
+              this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
             }
           });
 

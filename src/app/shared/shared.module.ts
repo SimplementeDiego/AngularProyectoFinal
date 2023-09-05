@@ -23,6 +23,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import {MatCardModule} from '@angular/material/card';
 
 
 
@@ -54,7 +55,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatSnackBarModule,
     MatCheckboxModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule
   ],
   exports: [
     NombreCompletoPipe,
@@ -77,7 +79,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatSnackBarModule,
     MatCheckboxModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule
   ]
 })
 export class SharedModule { }

@@ -52,3 +52,9 @@ export interface UsuarioConId extends Usuario {
   token: string,
   id: number
 }
+
+export interface Información {
+  cantidadAlumnos: number,
+  cantidadCursos: number,
+  cantidadInscripciones: number
+}

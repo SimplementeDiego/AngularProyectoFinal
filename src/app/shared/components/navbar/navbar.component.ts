@@ -13,7 +13,14 @@ export class NavbarComponent implements OnInit {
 
   }
 
+  @Input()
+  sePuedeAgregar: string = "si";
+
   usuario: string = "";
+
+  rol: string = this.auth.getRol();
+
+  valor: boolean = false;
 
   ngOnInit(): void {
 
@@ -25,9 +32,11 @@ export class NavbarComponent implements OnInit {
       }
     });
 
+    this.valor = this.sePuedeAgregar=="si" && this.rol == "Administrador";
+
   }
 
-  rol: string = this.auth.getRol();
+
 
   @Output()
   editUser = new EventEmitter<any>();

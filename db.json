@@ -5,23 +5,95 @@
       "lastName": "Furrer",
       "email": "diego@gmail.com",
       "id": 1
+    },
+    {
+      "firstName": "Pilar",
+      "lastName": "Gomez",
+      "email": "pgomez@gmail.com",
+      "id": 3
+    },
+    {
+      "firstName": "Juan",
+      "lastName": "Perez",
+      "email": "jperez@gmail.com",
+      "id": 4
     }
   ],
   "inscripciones": [
     {
       "alumno": 1,
-      "curso": 2,
+      "curso": 4,
       "id": 1
     },
     {
       "alumno": 1,
       "curso": 6,
-      "id": 2
+      "id": 5
+    },
+    {
+      "alumno": 3,
+      "curso": 4,
+      "id": 6
+    },
+    {
+      "alumno": 3,
+      "curso": 2,
+      "id": 7
+    },
+    {
+      "alumno": 3,
+      "curso": 6,
+      "id": 8
+    },
+    {
+      "alumno": 1,
+      "curso": 3,
+      "id": 9
     },
     {
       "alumno": 1,
       "curso": 5,
-      "id": 3
+      "id": 10
+    },
+    {
+      "alumno": 4,
+      "curso": 2,
+      "id": 11
+    },
+    {
+      "alumno": 4,
+      "curso": 3,
+      "id": 12
+    },
+    {
+      "alumno": 4,
+      "curso": 4,
+      "id": 13
+    },
+    {
+      "alumno": 4,
+      "curso": 4,
+      "id": 14
+    },
+    {
+      "alumno": 4,
+      "curso": 5,
+      "id": 15
+    },
+    {
+      "alumno": 4,
+      "curso": 6,
+      "id": 16
+    },
+    {
+      "alumno": 1,
+      "curso": 2,
+      "id": 17
+    },
+    {
+      "alumno": 3,
+      "curso": 3,
+      "id": 18
     }
   ],
   "Cursos": [
@@ -78,7 +150,7 @@
       "usuario": "Diego Furrer",
       "email": "diego@gmail.com",
       "password": "123",
-      "rol": "Usuario",
+      "rol": "Administrador",
       "token": ""
     }
   ]

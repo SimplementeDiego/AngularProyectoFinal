@@ -50,12 +50,10 @@ export class InscripcionesAddEditComponent implements OnInit {
       }
 
       if (this.data) {
-        console.log(información)
         this._dialogRef.close(true);
         this._inscripcionesService.updateInscripcion(this.data.id, información)
 
       } else {
-        console.log(información)
         this._dialogRef.close(true);
         this._inscripcionesService.addInscripcion(información)
       }

@@ -4,5 +4,5 @@
     <span class="mr">| {{usuario | mayusc}}</span>
     <span class="example-spacer"></span>
 
-  <button *ngIf="rol=='Administrador'" mat-raised-button (click)="agregar.emit($event)">Agregar</button>
+  <button *ngIf="valor" mat-raised-button (click)="agregar.emit($event)">Agregar</button>
   </mat-toolbar>

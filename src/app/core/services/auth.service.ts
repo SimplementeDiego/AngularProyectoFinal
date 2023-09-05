@@ -64,6 +64,9 @@ export class AuthService {
             this.rol = USER[0].rol;
             this.router.navigate(['/dashboard']);
           }
+        },
+        error: ()=>{
+          this.dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
         }
       });
     }

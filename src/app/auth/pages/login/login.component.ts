@@ -31,5 +31,6 @@ export class LoginComponent {
     } else {
       this.authService.login(información)
     }
+
   }
 }

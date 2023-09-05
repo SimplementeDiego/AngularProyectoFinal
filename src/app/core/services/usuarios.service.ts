@@ -17,7 +17,7 @@ export class UsuariosService {
   private _usuariosEmitidos$ = new BehaviorSubject<Array<UsuarioConId>>([]);
   public usuariosEmitidos$ = this._usuariosEmitidos$.asObservable();
 
-  constructor( private _http: HttpClient, private router: Router, private dialog: MatDialog ) {
+  constructor( private _http: HttpClient, private router: Router, private _dialog: MatDialog ) {
 
   }
 
@@ -34,7 +34,7 @@ export class UsuariosService {
         this.getUsuarioList();
       },
       error: ()=>{
-        this.dialog.open(PopupComponent, {
+        this._dialog.open(PopupComponent, {
           data: 'Ocurrio un error. Intentalo mas tarde.',
         });
       }
@@ -45,6 +45,9 @@ export class UsuariosService {
     this._http.put(`${baseUrl}usuarios/${id}`, data).subscribe({
       next:()=>{
         this.getUsuarioList();
+      },
+      error: ()=>{
+        this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });
   }
@@ -53,6 +56,9 @@ export class UsuariosService {
     this._http.get<Array<UsuarioConId>>(`${baseUrl}usuarios`).subscribe({
       next: (res)=>{
         this._usuariosEmitidos$.next(res);
+      },
+      error: ()=>{
+        this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });
   }
@@ -61,6 +67,9 @@ export class UsuariosService {
     this._http.delete(`${baseUrl}usuarios/${id}`).subscribe({
       next: ()=>{
         this.getUsuarioList();
+      },
+      error: ()=>{
+        this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });
   }

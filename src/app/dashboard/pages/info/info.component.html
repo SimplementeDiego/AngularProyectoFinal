@@ -1,0 +1,25 @@
+<app-navbar [titulo]="titulo"  [sePuedeAgregar]="'no'"></app-navbar>
+<div class="cardsContainer">
+  <h1 class="titulo">Información del ABM</h1>
+  <div class="container">
+    <mat-card class="bc">
+      <mat-card-content class="m">
+        <p style="font-size: 2rem;">{{alumnosInfo$ | async}} Alumnos</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="container">
+    <mat-card class="bc">
+      <mat-card-content class="m">
+        <p style="font-size: 2rem;">{{cursosInfo$ | async}} Cursos</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="container">
+    <mat-card class="bc">
+      <mat-card-content class="m">
+        <p style="font-size: 2rem;">{{inscripcionesInfo$ | async}} Inscripciones</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
