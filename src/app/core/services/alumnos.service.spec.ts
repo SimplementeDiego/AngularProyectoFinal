@@ -5,6 +5,8 @@ import {
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AlumnosService } from './alumnos.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('AlumnosService', () => {
   let service: AlumnosService;
@@ -12,7 +14,7 @@ describe('AlumnosService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule],
+      imports: [HttpClientTestingModule, RouterTestingModule, MatSnackBarModule, MatDialogModule],
       providers: [AlumnosService],
     });
     service = TestBed.inject(AlumnosService);
