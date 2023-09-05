@@ -25,7 +25,7 @@ export class InfoEffects {
 
   loadCurso$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(InfoActions.loadAlumnos),
+      ofType(InfoActions.loadCursos),
       concatMap( () => this._http.get<Array<CursoConId>>(`${baseUrl}cursos`).pipe(
         map(data => InfoActions.loadCursosSuccess({ data })),
         catchError(error => of(InfoActions.loadCursosFailure({ error })))))
