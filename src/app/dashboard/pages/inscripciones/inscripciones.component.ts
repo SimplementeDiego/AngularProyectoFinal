@@ -46,7 +46,7 @@ export class InscripcionesComponent implements OnInit, OnDestroy{
     this.matDialog.open(InscripcionesInfoComponent, {data: evento})
   }
 
-  deleteClase(id: number) {
+  deleteInscripcion(id: number) {
     this.verifyDialog
       .open(PopupVerifyComponent)
       .afterClosed()
@@ -59,11 +59,11 @@ export class InscripcionesComponent implements OnInit, OnDestroy{
       });
   }
 
-  createClase(): void {
+  createInscripcion(): void {
     this.matDialog.open(InscripcionesAddEditComponent)
   }
 
-  editClase(inscripcion: InscripciónConInfoConId ): void {
+  editInscripcion(inscripcion: InscripciónConInfoConId ): void {
 
     const información = {
       id: inscripcion.id,

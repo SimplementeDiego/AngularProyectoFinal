@@ -54,7 +54,7 @@ export class CursosService {
   }
 
   deleteCurso(id: number) {
-    this._http.get<Array<InscripciónConId>>(`${baseUrl}clases?alumno=${id}`).subscribe({
+    this._http.get<Array<InscripciónConId>>(`${baseUrl}inscripciones?alumno=${id}`).subscribe({
       next: (res)=>{
 
         if (res.length == 0){
@@ -71,14 +71,14 @@ export class CursosService {
           this._dialog.open(PopupVerifyComponent, { data: "El curso tiene inscripciones relacionadas. Desea eliminar las inscripciones y el curso?" }).afterClosed().subscribe({
             next: (res)=>{
               if (res){
-                this._http.get<Array<InscripciónConId>>(`${baseUrl}clases?curso=${id}`).subscribe({
+                this._http.get<Array<InscripciónConId>>(`${baseUrl}inscripciones?curso=${id}`).subscribe({
                   next: (res)=>{
 
                     let observables: Observable<any>[] = [];
 
                     res.forEach( (elemento)=>{
 
-                      observables.push(this._http.delete(`${baseUrl}clases/${elemento.id.toString()}`));
+                      observables.push(this._http.delete(`${baseUrl}inscripciones/${elemento.id.toString()}`));
 
                     } )
 

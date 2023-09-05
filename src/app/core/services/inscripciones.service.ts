@@ -38,7 +38,7 @@ export class InscripcionesService {
   }
 
   getInscripcionList() {
-    this._http.get<Array<InscripciónConId>>(`${baseUrl}clases`).subscribe({
+    this._http.get<Array<InscripciónConId>>(`${baseUrl}inscripciones`).subscribe({
       next: (inscripcionesEmitidas)=>{
         this._inscripcionesEmitidas$.next(inscripcionesEmitidas);
 
@@ -102,7 +102,7 @@ export class InscripcionesService {
   }
 
   addInscripcion( data: Inscripción ) {
-    return this._http.post(`${baseUrl}clases`, data).subscribe({
+    return this._http.post(`${baseUrl}inscripciones`, data).subscribe({
       next: ()=>{
         this.getInscripcionList()
         this.snackbar.open("Inscripción Agregada", "Cerrar",{duration:5000});
@@ -111,7 +111,7 @@ export class InscripcionesService {
   }
 
   updateInscripcion( id: number, data: Inscripción ) {
-    this._http.put(`${baseUrl}clases/${id}`, data).subscribe({
+    this._http.put(`${baseUrl}inscripciones/${id}`, data).subscribe({
       next: ()=>{
         this.getInscripcionList()
         this.snackbar.open("Inscripción Modificada", "Cerrar",{duration:5000});
@@ -120,7 +120,7 @@ export class InscripcionesService {
   }
 
   deleteInscripcion(id: number) {
-    this._http.delete(`${baseUrl}clases/${id}`).subscribe({
+    this._http.delete(`${baseUrl}inscripciones/${id}`).subscribe({
       next: ()=>{
         this.getInscripcionList()
         this.snackbar.open("Inscripción Eliminada", "Cerrar",{duration:5000});
