@@ -80,9 +80,7 @@ export class InscripcionesComponent implements OnInit, OnDestroy{
     this.inscripciones$ = this._inscripcionesService.inscripcionesConInfoEmitidas$.pipe(
       map((valor) => {
         return valor.filter((inscripcion: InscripciónConInfoConId) => {
-          return inscripcion.alumno.firstName
-            .toLowerCase()
-            .startsWith(filterValue.toLowerCase());
+          return (inscripcion.alumno.firstName.toLowerCase().startsWith(filterValue.toLowerCase()) || inscripcion.alumno.lastName.toLowerCase().startsWith(filterValue.toLowerCase()) || inscripcion.curso.areaCurso.toLowerCase().startsWith(filterValue.toLowerCase()));
         });
       })
     );

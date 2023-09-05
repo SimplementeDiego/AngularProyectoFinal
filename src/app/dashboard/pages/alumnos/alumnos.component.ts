@@ -68,9 +68,7 @@ export class AlumnosComponent implements OnInit, OnDestroy{
     this.alumnos = this.alumnosService.alumnosEmitidos$.pipe(
       map((valor) => {
         return valor.filter((alumno: AlumnoConId) => {
-          return alumno.firstName
-            .toLowerCase()
-            .startsWith(filterValue.toLowerCase());
+          return (alumno.firstName.toLowerCase().startsWith(filterValue.toLowerCase()) || alumno.lastName.toLowerCase().startsWith(filterValue.toLowerCase()));
         });
       })
     );

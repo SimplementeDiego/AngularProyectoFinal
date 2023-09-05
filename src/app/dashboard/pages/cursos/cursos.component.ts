@@ -69,9 +69,7 @@ export class CursosComponent implements OnInit, OnDestroy {
     this.cursos = this.cursosService.cursosEmitidos$.pipe(
       map((valor) => {
         return valor.filter((curso: CursoConId) => {
-          return curso.areaCurso
-            .toLowerCase()
-            .startsWith(filterValue.toLowerCase());
+          return curso.areaCurso.toLowerCase().startsWith(filterValue.toLowerCase());
         });
       })
     );
