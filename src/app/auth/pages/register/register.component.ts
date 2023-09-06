@@ -38,7 +38,9 @@ export class RegisterComponent {
     const información = {
       email: this.registerForm.value.email || "",
       password: this.registerForm.value.password || "",
-      usuario: this.registerForm.value.usuario || ""
+      usuario: this.registerForm.value.usuario || "",
+      rol: this.registerForm.value.rol || "",
+      token: this.token()
     }
 
     if (this.registerForm.invalid) {

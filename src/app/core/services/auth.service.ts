@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable, map, take } from 'rxjs';
 import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
 import { UsuariosService } from './usuarios.service';
 import { baseUrl } from 'src/environments/environments';
-import { Usuario, UsuarioConId, UsuarioLogIn } from 'src/app/dashboard/pages/models';
+import { Usuario, UsuarioConId, UsuarioLogIn, UsuarioSinId } from 'src/app/dashboard/pages/models';
 
 @Injectable({
   providedIn: 'root',
@@ -111,7 +111,7 @@ export class AuthService {
       });
   }
 
-  register(payload: Usuario): void {
+  register(payload: UsuarioSinId): void {
     this._http
       .get<Array<UsuarioConId>>(`${baseUrl}usuarios`, {
         params: {

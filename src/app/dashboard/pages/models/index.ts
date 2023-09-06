@@ -53,6 +53,11 @@ export interface UsuarioConId extends Usuario {
   id: number
 }
 
+export interface UsuarioSinId extends Usuario{
+  rol: string,
+  token: string,
+}
+
 export interface Información {
   cantidadAlumnos: number,
   cantidadCursos: number,

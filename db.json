@@ -155,14 +155,6 @@
       "rol": "Administrador",
       "token": "b6e2hvhanoaf92f3r6ubaboia3d4m14w8-nvyjpmftzwahptuff8vkvm8fu7if3ndo3",
       "id": 2
-    },
-    {
-      "id": 3,
-      "usuario": "Diego Furrer",
-      "email": "diego@gmail.com",
-      "password": "123",
-      "rol": "Administrador",
-      "token": ""
     }
   ]
 }
