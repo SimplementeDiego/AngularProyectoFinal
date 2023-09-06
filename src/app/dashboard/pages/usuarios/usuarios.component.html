@@ -1,2 +1,2 @@
-<app-navbar (agregar)="addUsuario()" [titulo]="titulo" ></app-navbar>
+<app-navbar (agregar)="addUsuario()" [titulo]="titulo" class="miNavBar" ></app-navbar>
 <app-table [dataSource] = "(usuarios | async) || []" class="largo" (deleteButton)="deleteUsuario($event)" (editButton)="updateUsuario($event)" (showButton)="showButton($event)" (applyFilter)="applyFilter($event)" [displayedColumns] = "displayedColumns" ></app-table>

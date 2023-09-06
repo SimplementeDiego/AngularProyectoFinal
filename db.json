@@ -17,6 +17,12 @@
       "lastName": "Perez",
       "email": "jperez@gmail.com",
       "id": 4
+    },
+    {
+      "firstName": "Felipe",
+      "lastName": "Romero",
+      "email": "fromero@gmail.com",
+      "id": 5
     }
   ],
   "inscripciones": [
@@ -94,6 +100,16 @@
       "alumno": 3,
       "curso": 3,
       "id": 18
+    },
+    {
+      "alumno": 5,
+      "curso": 4,
+      "id": 19
+    },
+    {
+      "alumno": 5,
+      "curso": 2,
+      "id": 20
     }
   ],
   "Cursos": [

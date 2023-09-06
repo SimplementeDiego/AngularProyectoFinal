@@ -1,2 +1,2 @@
-<app-navbar (agregar)="createInscripcion()" [titulo]="titulo" ></app-navbar>
+<app-navbar (agregar)="createInscripcion()" [titulo]="titulo" class="miNavBar" ></app-navbar>
 <app-table [dataSource] = "(inscripciones$ | async)" class="largo" (deleteButton)="deleteInscripcion($event)" (editButton)="editInscripcion($event)" (applyFilter)="applyFilter($event)" (showButton)="showButton($event)" [displayedColumns] = "displayedColumns" ></app-table>
