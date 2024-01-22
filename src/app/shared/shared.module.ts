@@ -24,6 +24,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
+import { AvisoComponent } from './components/aviso/aviso.component';
 
 
 
@@ -36,7 +37,8 @@ import {MatCardModule} from '@angular/material/card';
     TableComponent,
     PopupComponent,
     PopupVerifyComponent,
-    PrimerLetraMayusc
+    PrimerLetraMayusc,
+    AvisoComponent
   ],
   imports: [
     CommonModule,

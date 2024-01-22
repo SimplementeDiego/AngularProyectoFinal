@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AvisoComponent } from 'src/app/shared/components/aviso/aviso.component';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +19,15 @@ export class LoginComponent {
     password: this.passwordControl,
   });
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private dialog: MatDialog) {
+
+    this.dialog.open(AvisoComponent)
+
+  }
+
+  aviso(){
+    this.dialog.open(AvisoComponent)
+  }
 
   login(){
 

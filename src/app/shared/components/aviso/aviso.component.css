@@ -1,0 +1,11 @@
+.centrar{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.aviso {
+
+  margin: 20px;
+
+}

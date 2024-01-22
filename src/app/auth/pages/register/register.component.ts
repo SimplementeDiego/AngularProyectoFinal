@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../../core/services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AvisoComponent } from 'src/app/shared/components/aviso/aviso.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-register',
@@ -31,7 +33,13 @@ export class RegisterComponent {
     return this.rand() + this.rand() + this.rand() + '-' + this.rand() + this.rand() + this.rand(); // to make it longer
   };
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private dialog: MatDialog) {
+
+  }
+
+  aviso(){
+    this.dialog.open(AvisoComponent)
+  }
 
   register(){
 
