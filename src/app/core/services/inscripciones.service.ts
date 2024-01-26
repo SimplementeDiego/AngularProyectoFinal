@@ -7,6 +7,7 @@ import { AlumnoConId, CursoConId, Inscripción, InscripciónConId, InscripciónC
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
+import { CargaComponent } from 'src/app/shared/components/carga/carga.component';
 
 @Injectable({
   providedIn: 'root',
@@ -41,8 +42,10 @@ export class InscripcionesService {
   }
 
   getInscripcionList() {
+    this._dialog.open(CargaComponent);
     this._http.get<Array<InscripciónConId>>(`${baseUrl}inscripciones`).subscribe({
       next: (inscripcionesEmitidas)=>{
+
         this._inscripcionesEmitidas$.next(inscripcionesEmitidas);
 
         let cantidad = inscripcionesEmitidas.length
@@ -57,6 +60,8 @@ export class InscripcionesService {
 
             this._http.get<Array<CursoConId>>(`${baseUrl}cursos`).subscribe({
               next: (cursosEmitidos)=>{
+
+
 
                 let InscripcionesConInfo: InscripciónConInfoConId[] = [];
 
@@ -94,20 +99,25 @@ export class InscripcionesService {
 
                 this._inscripcionesConInfoEmitidas$.next(InscripcionesConInfo)
 
+                this._dialog.closeAll();
+
               },
               error: ()=>{
+                this._dialog.closeAll();
                 this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
               }
             });
 
           },
           error: ()=>{
+            this._dialog.closeAll();
             this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
           }
         })
 
       },
       error: ()=>{
+        this._dialog.closeAll();
         this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });

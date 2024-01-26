@@ -25,6 +25,8 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import { AvisoComponent } from './components/aviso/aviso.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CargaComponent } from './components/carga/carga.component';
 
 
 
@@ -38,7 +40,8 @@ import { AvisoComponent } from './components/aviso/aviso.component';
     PopupComponent,
     PopupVerifyComponent,
     PrimerLetraMayusc,
-    AvisoComponent
+    AvisoComponent,
+    CargaComponent
   ],
   imports: [
     CommonModule,
@@ -58,7 +61,8 @@ import { AvisoComponent } from './components/aviso/aviso.component';
     MatCheckboxModule,
     MatOptionModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     NombreCompletoPipe,
@@ -82,7 +86,8 @@ import { AvisoComponent } from './components/aviso/aviso.component';
     MatCheckboxModule,
     MatOptionModule,
     MatSelectModule,
-    MatCardModule
+    MatCardModule,
+    MatProgressSpinnerModule
   ]
 })
 export class SharedModule { }

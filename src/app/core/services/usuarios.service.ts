@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Usuario, UsuarioConId } from 'src/app/dashboard/pages/models';
+import { CargaComponent } from 'src/app/shared/components/carga/carga.component';
 import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
 import { baseUrl } from 'src/environments/environments';
 
@@ -53,11 +54,14 @@ export class UsuariosService {
   }
 
   getUsuarioList() {
+    this._dialog.open(CargaComponent);
     this._http.get<Array<UsuarioConId>>(`${baseUrl}usuarios`).subscribe({
       next: (res)=>{
         this._usuariosEmitidos$.next(res);
+        this._dialog.closeAll();
       },
       error: ()=>{
+        this._dialog.closeAll();
         this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });

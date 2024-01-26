@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AvisoComponent } from 'src/app/shared/components/aviso/aviso.component';
+import { CargaComponent } from 'src/app/shared/components/carga/carga.component';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +23,7 @@ export class LoginComponent {
   constructor(private authService: AuthService, private dialog: MatDialog) {
 
     this.dialog.open(AvisoComponent)
+    //this.dialog.open(CargaComponent)
 
   }
 

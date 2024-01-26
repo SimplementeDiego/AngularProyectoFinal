@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { BehaviorSubject, Observable, concat } from 'rxjs';
 import { Curso, CursoConId, InscripciónConId } from 'src/app/dashboard/pages/models';
+import { CargaComponent } from 'src/app/shared/components/carga/carga.component';
 import { PopupVerifyComponent } from 'src/app/shared/components/popup-verify/popup-verify.component';
 import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
 import { baseUrl } from 'src/environments/environments';
@@ -52,11 +53,14 @@ export class CursosService {
   }
 
   getCursoList() {
+    this._dialog.open(CargaComponent);
     this._http.get<Array<CursoConId>>(`${baseUrl}cursos`).subscribe({
       next: (res)=>{
         this._cursosEmitidos$.next(res);
+        this._dialog.closeAll()
       },
       error: ()=>{
+        this._dialog.closeAll();
         this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });

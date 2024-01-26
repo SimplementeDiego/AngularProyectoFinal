@@ -8,6 +8,7 @@ import { PopupComponent } from 'src/app/shared/components/popup/popup.component'
 import { UsuariosService } from './usuarios.service';
 import { baseUrl } from 'src/environments/environments';
 import { Usuario, UsuarioConId, UsuarioLogIn, UsuarioSinId } from 'src/app/dashboard/pages/models';
+import { CargaComponent } from 'src/app/shared/components/carga/carga.component';
 
 @Injectable({
   providedIn: 'root',
@@ -73,6 +74,7 @@ export class AuthService {
   }
 
   login(payload: UsuarioLogIn): void {
+    this.dialog.open(CargaComponent);
     this._http
       .get<Array<UsuarioConId>>(`${baseUrl}usuarios`, {
         params: {
@@ -96,7 +98,9 @@ export class AuthService {
             this._authUser$.next(USER[0]);
             this.rol = USER[0].rol;
             this.router.navigate(['/dashboard']);
+            this.dialog.closeAll();
           } else {
+            this.dialog.closeAll();
             this.dialog.open(PopupComponent, {
               data: 'Email o contraseña invalida',
             });
@@ -104,6 +108,7 @@ export class AuthService {
           }
         },
         error: () => {
+          this.dialog.closeAll();
           this.dialog.open(PopupComponent, {
             data: 'Ocurrio un error. Intentalo mas tarde.',
           });
@@ -112,6 +117,7 @@ export class AuthService {
   }
 
   register(payload: UsuarioSinId): void {
+    this.dialog.open(CargaComponent);
     this._http
       .get<Array<UsuarioConId>>(`${baseUrl}usuarios`, {
         params: {
@@ -120,6 +126,7 @@ export class AuthService {
       })
       .subscribe({
         next: (res: UsuarioConId[]) => {
+          this.dialog.closeAll()
           const USER = res.filter((obj) => {
             return obj.email === payload.email;
           });
@@ -134,6 +141,7 @@ export class AuthService {
           }
         },
         error: () => {
+          this.dialog.closeAll();
           this.dialog.open(PopupComponent, {
             data: 'Ocurrio un error. Intentalo mas tarde.',
           });

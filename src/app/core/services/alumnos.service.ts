@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { BehaviorSubject, Observable, concat } from 'rxjs';
 import { Alumno, AlumnoConId, InscripciónConId } from 'src/app/dashboard/pages/models';
+import { CargaComponent } from 'src/app/shared/components/carga/carga.component';
 import { PopupVerifyComponent } from 'src/app/shared/components/popup-verify/popup-verify.component';
 import { PopupComponent } from 'src/app/shared/components/popup/popup.component';
 
@@ -52,11 +53,14 @@ export class AlumnosService {
   }
 
   getAlumnoList() {
+    this._dialog.open(CargaComponent);
     this._http.get<AlumnoConId[]>(`${baseUrl}alumnos`).subscribe({
       next: (res)=>{
         this._alumnosEmitidos$.next(res);
+        this._dialog.closeAll();
       },
       error: ()=>{
+        this._dialog.closeAll();
         this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });
