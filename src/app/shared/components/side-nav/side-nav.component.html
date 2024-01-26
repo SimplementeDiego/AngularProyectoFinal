@@ -4,19 +4,19 @@
       <h1 class="titulo"><strong>CRUD</strong></h1>
     </div>
     <div>
-      <a routerLink="info"><button mat-raised-button color="primary">Información</button></a>
+      <a routerLink="info" routerLinkActive="active" #rla1="routerLinkActive"><button mat-raised-button [color]="(rla1.isActive && 'warn')||'primary'" >Información</button></a>
     </div>
     <div>
-      <a routerLink="alumnos"><button mat-raised-button color="primary">Alumnos</button></a>
+      <a routerLink="alumnos" routerLinkActive="active" #rla2="routerLinkActive"><button mat-raised-button [color]="(rla2.isActive && 'warn')||'primary'">Alumnos</button></a>
     </div>
     <div>
-      <a routerLink="cursos"><button mat-raised-button color="primary">Cursos</button></a>
+      <a routerLink="cursos" routerLinkActive="active" #rla3="routerLinkActive"><button mat-raised-button [color]="(rla3.isActive && 'warn')||'primary'">Cursos</button></a>
     </div>
     <div>
-      <a routerLink="inscripciones"><button mat-raised-button color="primary">Inscripciones</button></a>
+      <a routerLink="inscripciones" routerLinkActive="active" #rla4="routerLinkActive" ><button mat-raised-button [color]="(rla4.isActive && 'warn')||'primary'">Inscripciones</button></a>
     </div>
     <div *ngIf="rol=='Administrador'">
-      <a routerLink="usuarios"><button mat-raised-button color="primary">Usuarios</button></a>
+      <a routerLink="usuarios" routerLinkActive="active" #rla5="routerLinkActive"><button mat-raised-button [color]="(rla5.isActive && 'warn')||'primary'">Usuarios</button></a>
     </div>
     <div>
       <a (click)="logout()"><button mat-raised-button color="accent">Cerrar Sesión</button></a>
