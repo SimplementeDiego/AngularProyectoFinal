@@ -42,7 +42,7 @@ export class InscripcionesService {
   }
 
   getInscripcionList() {
-    this._dialog.open(CargaComponent);
+    let DialogVar = this._dialog.open(CargaComponent);
     this._http.get<Array<InscripciónConId>>(`${baseUrl}inscripciones`).subscribe({
       next: (inscripcionesEmitidas)=>{
 
@@ -99,25 +99,25 @@ export class InscripcionesService {
 
                 this._inscripcionesConInfoEmitidas$.next(InscripcionesConInfo)
 
-                this._dialog.closeAll();
+                DialogVar.close();
 
               },
               error: ()=>{
-                this._dialog.closeAll();
+                DialogVar.close();
                 this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
               }
             });
 
           },
           error: ()=>{
-            this._dialog.closeAll();
+            DialogVar.close();
             this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
           }
         })
 
       },
       error: ()=>{
-        this._dialog.closeAll();
+        DialogVar.close();
         this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });

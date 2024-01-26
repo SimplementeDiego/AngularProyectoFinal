@@ -54,14 +54,14 @@ export class UsuariosService {
   }
 
   getUsuarioList() {
-    this._dialog.open(CargaComponent);
+    let DialogVar = this._dialog.open(CargaComponent);
     this._http.get<Array<UsuarioConId>>(`${baseUrl}usuarios`).subscribe({
       next: (res)=>{
         this._usuariosEmitidos$.next(res);
-        this._dialog.closeAll();
+        DialogVar.close();
       },
       error: ()=>{
-        this._dialog.closeAll();
+        DialogVar.close();
         this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });

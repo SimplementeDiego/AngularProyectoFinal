@@ -53,14 +53,14 @@ export class AlumnosService {
   }
 
   getAlumnoList() {
-    this._dialog.open(CargaComponent);
+    let DialogVar = this._dialog.open(CargaComponent);
     this._http.get<AlumnoConId[]>(`${baseUrl}alumnos`).subscribe({
       next: (res)=>{
         this._alumnosEmitidos$.next(res);
-        this._dialog.closeAll();
+        DialogVar.close();
       },
       error: ()=>{
-        this._dialog.closeAll();
+        DialogVar.close();
         this._dialog.open(PopupComponent, { data: "Ocurrio un error inesperado. Intente nuevamente mas tarde." })
       }
     });

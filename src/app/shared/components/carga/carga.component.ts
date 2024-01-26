@@ -9,4 +9,8 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class CargaComponent {
   constructor(private ref: MatDialogRef<CargaComponent> ){}
 
+  closeDialog(){
+    this.ref.close();
+  }
+
 }

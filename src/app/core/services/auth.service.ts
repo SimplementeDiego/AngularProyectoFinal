@@ -74,7 +74,7 @@ export class AuthService {
   }
 
   login(payload: UsuarioLogIn): void {
-    this.dialog.open(CargaComponent);
+    let DialogVar = this.dialog.open(CargaComponent);
     this._http
       .get<Array<UsuarioConId>>(`${baseUrl}usuarios`, {
         params: {
@@ -98,9 +98,9 @@ export class AuthService {
             this._authUser$.next(USER[0]);
             this.rol = USER[0].rol;
             this.router.navigate(['/dashboard']);
-            this.dialog.closeAll();
+            DialogVar.close();
           } else {
-            this.dialog.closeAll();
+            DialogVar.close();
             this.dialog.open(PopupComponent, {
               data: 'Email o contraseña invalida',
             });
@@ -108,7 +108,7 @@ export class AuthService {
           }
         },
         error: () => {
-          this.dialog.closeAll();
+          DialogVar.close();
           this.dialog.open(PopupComponent, {
             data: 'Ocurrio un error. Intentalo mas tarde.',
           });
@@ -117,7 +117,7 @@ export class AuthService {
   }
 
   register(payload: UsuarioSinId): void {
-    this.dialog.open(CargaComponent);
+    let DialogVar = this.dialog.open(CargaComponent);
     this._http
       .get<Array<UsuarioConId>>(`${baseUrl}usuarios`, {
         params: {
@@ -126,14 +126,15 @@ export class AuthService {
       })
       .subscribe({
         next: (res: UsuarioConId[]) => {
-          this.dialog.closeAll()
           const USER = res.filter((obj) => {
             return obj.email === payload.email;
           });
 
           if (USER.length == 0) {
             this.addUsuario(payload)
+            DialogVar.close();
           } else {
+            DialogVar.close();
             this.dialog.open(PopupComponent, {
               data: 'Email ya registrado',
             });
@@ -141,7 +142,7 @@ export class AuthService {
           }
         },
         error: () => {
-          this.dialog.closeAll();
+          DialogVar.close();
           this.dialog.open(PopupComponent, {
             data: 'Ocurrio un error. Intentalo mas tarde.',
           });
